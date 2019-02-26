@@ -10,7 +10,7 @@ public class PongArea extends Panel {
     
     public PongArea(PongGame parent) {
         myApplet = parent;
-        paddle    = parent.getImage(myApplet.getCodeBase(), "Pong\\" + "paddle.gif");
+        paddle    = parent.getImage(myApplet.getCodeBase(), "Assets\\" + "paddle.gif");
     }
     
     public void paint (Graphics g) {

@@ -11,12 +11,12 @@ public class ZombieArea extends Panel {
     
     public ZombieArea(ZombieGame parent) {
         myApplet = parent;
-        zombieImage = parent.getImage(myApplet.getCodeBase(), "Zombie\\" + "zombie.gif");
-        personImage = parent.getImage(myApplet.getCodeBase(), "Zombie\\" + "person.gif");
-        pitImage    = parent.getImage(myApplet.getCodeBase(), "Zombie\\" + "pit.gif");
-        explosion1 = parent.getImage(myApplet.getCodeBase(), "Zombie\\" + "explosion1.gif");
-        explosion2 = parent.getImage(myApplet.getCodeBase(), "Zombie\\" + "explosion2.gif");
-        explosion3 = parent.getImage(myApplet.getCodeBase(), "Zombie\\" + "explosion3.gif");
+        zombieImage = parent.getImage(myApplet.getCodeBase(), "Assets\\" + "zombie.gif");
+        personImage = parent.getImage(myApplet.getCodeBase(), "Assets\\" + "person.gif");
+        pitImage    = parent.getImage(myApplet.getCodeBase(), "Assets\\" + "pit.gif");
+        explosion1 = parent.getImage(myApplet.getCodeBase(), "Assets\\" + "explosion1.gif");
+        explosion2 = parent.getImage(myApplet.getCodeBase(), "Assets\\" + "explosion2.gif");
+        explosion3 = parent.getImage(myApplet.getCodeBase(), "Assets\\" + "explosion3.gif");
     }
     
     public void paint (Graphics g) {
