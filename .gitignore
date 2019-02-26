@@ -1,0 +1,11 @@
+resource.h
+.project
+.classpath
+*.class
+*.cdb
+*.ve2
+*.vep
+*.vpj
+thumbs.db
+CaveGame/mp3s/
+#java.policy.applet
