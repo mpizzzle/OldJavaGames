@@ -1,20 +1,18 @@
-package CaveGame;
-
-public class WayOut implements CaveInterface {
+public class FirstCave implements CaveInterface {
     CaveGame myParent;
     CaveArea myArea;
     
-    public WayOut (CaveGame parent, CaveArea area) {
+    public FirstCave (CaveGame parent, CaveArea area) {
         myParent = parent;
         myArea = area;
     }
     
     public void display() {
-        myArea.currentImage = myArea.gameComplete;
+        myArea.currentImage = myArea.firstCave;
         if (myArea.currentMusic != null) myArea.currentMusic.stop();
-        myArea.currentMusic = myArea.ACgameComplete;
+        myArea.currentMusic = myArea.ACfirstCave;
         if (myArea.currentMusic != null) myArea.currentMusic.loop();
-        myParent.showStatus("At the Exit");
+        myParent.showStatus("In the First Cave");
         myArea.repaint();
     }
     

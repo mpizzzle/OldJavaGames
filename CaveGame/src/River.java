@@ -1,31 +1,27 @@
-package CaveGame;
-
-public class LeftDoor implements CaveInterface {
+public class River implements CaveInterface {
     CaveGame myParent;
     CaveArea myArea;
     
-    public LeftDoor(CaveGame parent, CaveArea area) {
+    public River (CaveGame parent, CaveArea area) {
         myParent = parent;
         myArea = area;
     }
     
     public void display() {
-        myArea.currentImage = myArea.leftDoor;
+        myArea.currentImage = myArea.river;
         if (myArea.currentMusic != null) myArea.currentMusic.stop();
-        myArea.currentMusic = myArea.ACleftDoor;
+        myArea.currentMusic = myArea.ACriver;
         if (myArea.currentMusic != null) myArea.currentMusic.loop();
-        myParent.showStatus("Through the Left Door");
+        myParent.showStatus("By the River");
         myArea.repaint();
     }
     
     public CaveInterface processA() {
-        // do nothing
-        return(this);
+        return(new Bridge(myParent, myArea));
     }
     
     public CaveInterface processB() {
-        // do nothing
-        return(this);
+        return(new Cavern(myParent, myArea));
     }
     
     public CaveInterface processC() {

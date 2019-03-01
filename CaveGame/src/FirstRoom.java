@@ -1,5 +1,3 @@
-package CaveGame;
-
 public class FirstRoom implements CaveInterface{
     CaveGame myParent;
     CaveArea myArea;

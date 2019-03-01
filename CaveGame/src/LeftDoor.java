@@ -1,20 +1,18 @@
-package CaveGame;
-
-public class FirstCave implements CaveInterface {
+public class LeftDoor implements CaveInterface {
     CaveGame myParent;
     CaveArea myArea;
     
-    public FirstCave (CaveGame parent, CaveArea area) {
+    public LeftDoor(CaveGame parent, CaveArea area) {
         myParent = parent;
         myArea = area;
     }
     
     public void display() {
-        myArea.currentImage = myArea.firstCave;
+        myArea.currentImage = myArea.leftDoor;
         if (myArea.currentMusic != null) myArea.currentMusic.stop();
-        myArea.currentMusic = myArea.ACfirstCave;
+        myArea.currentMusic = myArea.ACleftDoor;
         if (myArea.currentMusic != null) myArea.currentMusic.loop();
-        myParent.showStatus("In the First Cave");
+        myParent.showStatus("Through the Left Door");
         myArea.repaint();
     }
     

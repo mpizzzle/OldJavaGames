@@ -1,35 +1,30 @@
-package CaveGame;
-
-public class Rope implements CaveInterface {
+public class Cavern implements CaveInterface {
     CaveGame myParent;
     CaveArea myArea;
     
-    public Rope (CaveGame parent, CaveArea area) {
+    public Cavern (CaveGame parent, CaveArea area) {
         myParent = parent;
         myArea = area;
     }
     
     public void display() {
-        myArea.currentImage = myArea.rope;
+        myArea.currentImage = myArea.cavern;
+        myParent.showStatus("In the Cavern");
         if (myArea.currentMusic != null) myArea.currentMusic.stop();
-        myArea.currentMusic = myArea.ACrope;
+        myArea.currentMusic = myArea.ACcavern;
         if (myArea.currentMusic != null) myArea.currentMusic.loop();
-        myParent.showStatus("Down the Rope");
         myArea.repaint();
     }
     
     public CaveInterface processA() {
-        // do nothing
-        return(this);
+        return(new HotRoom(myParent, myArea));
     }
     
     public CaveInterface processB() {
-        // do nothing
-        return(this);
+        return(new Hole(myParent, myArea));
     }
     
     public CaveInterface processC() {
-        // do nothing
-        return(this);
+        return(new Rope(myParent, myArea));
     }
 }

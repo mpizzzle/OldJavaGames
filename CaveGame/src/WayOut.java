@@ -1,29 +1,29 @@
-package CaveGame;
-
-public class HotRoom implements CaveInterface {
+public class WayOut implements CaveInterface {
     CaveGame myParent;
     CaveArea myArea;
     
-    public HotRoom (CaveGame parent, CaveArea area) {
+    public WayOut (CaveGame parent, CaveArea area) {
         myParent = parent;
         myArea = area;
     }
     
     public void display() {
-        myArea.currentImage = myArea.hotRoom;
+        myArea.currentImage = myArea.gameComplete;
         if (myArea.currentMusic != null) myArea.currentMusic.stop();
-        myArea.currentMusic = myArea.AChotRoom;
+        myArea.currentMusic = myArea.ACgameComplete;
         if (myArea.currentMusic != null) myArea.currentMusic.loop();
-        myParent.showStatus("In the Hot Room");
+        myParent.showStatus("At the Exit");
         myArea.repaint();
     }
     
     public CaveInterface processA() {
-        return(new WayOut(myParent, myArea));
+        // do nothing
+        return(this);
     }
     
     public CaveInterface processB() {
-        return(new Cave2(myParent, myArea));
+        // do nothing
+        return(this);
     }
     
     public CaveInterface processC() {

@@ -1,29 +1,27 @@
-package CaveGame;
-
-public class River implements CaveInterface {
+public class HotRoom implements CaveInterface {
     CaveGame myParent;
     CaveArea myArea;
     
-    public River (CaveGame parent, CaveArea area) {
+    public HotRoom (CaveGame parent, CaveArea area) {
         myParent = parent;
         myArea = area;
     }
     
     public void display() {
-        myArea.currentImage = myArea.river;
+        myArea.currentImage = myArea.hotRoom;
         if (myArea.currentMusic != null) myArea.currentMusic.stop();
-        myArea.currentMusic = myArea.ACriver;
+        myArea.currentMusic = myArea.AChotRoom;
         if (myArea.currentMusic != null) myArea.currentMusic.loop();
-        myParent.showStatus("By the River");
+        myParent.showStatus("In the Hot Room");
         myArea.repaint();
     }
     
     public CaveInterface processA() {
-        return(new Bridge(myParent, myArea));
+        return(new WayOut(myParent, myArea));
     }
     
     public CaveInterface processB() {
-        return(new Cavern(myParent, myArea));
+        return(new Cave2(myParent, myArea));
     }
     
     public CaveInterface processC() {

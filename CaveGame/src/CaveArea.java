@@ -1,5 +1,3 @@
-package CaveGame;
-
 import java.awt.*;
 import java.applet.AudioClip;
 import java.net.*;

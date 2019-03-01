@@ -1,32 +1,33 @@
-package CaveGame;
-
-public class Cavern implements CaveInterface {
+public class Bridge implements CaveInterface {
     CaveGame myParent;
     CaveArea myArea;
     
-    public Cavern (CaveGame parent, CaveArea area) {
+    public Bridge (CaveGame parent, CaveArea area) {
         myParent = parent;
         myArea = area;
     }
     
     public void display() {
-        myArea.currentImage = myArea.cavern;
-        myParent.showStatus("In the Cavern");
+        myArea.currentImage = myArea.bridge;
+        myParent.showStatus("On the Bridge");
         if (myArea.currentMusic != null) myArea.currentMusic.stop();
-        myArea.currentMusic = myArea.ACcavern;
+        myArea.currentMusic = myArea.ACbridge;
         if (myArea.currentMusic != null) myArea.currentMusic.loop();
         myArea.repaint();
     }
     
     public CaveInterface processA() {
-        return(new HotRoom(myParent, myArea));
+        // do nothing
+        return(this);
     }
     
     public CaveInterface processB() {
-        return(new Hole(myParent, myArea));
+        // do nothing
+        return(this);
     }
     
     public CaveInterface processC() {
-        return(new Rope(myParent, myArea));
+        // do nothing
+        return(this);
     }
 }

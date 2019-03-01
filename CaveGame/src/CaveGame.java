@@ -1,13 +1,11 @@
 //* Copyright (c) Mary Percival 2003                          */
 /* CaveGame game                      Created December 2003   */
 
-package  CaveGame;
-
 import  java.awt.*;
 import  java.awt.event.*;
 import  java.applet.*;
 
-public class CaveGame extends Applet implements KeyListener {
+public class CaveGame extends JPanel implements KeyListener {
     
     static boolean finished = false;
     CaveArea area;
