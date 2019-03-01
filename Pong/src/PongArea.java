@@ -21,7 +21,7 @@ public class PongArea extends JPanel implements ActionListener {
     public PongArea(PongGame parent) {
         myApplet = parent;
         try {
-            paddle = ImageIO.read(new File("/home/mpizzzle/OldJavaGames/Pong/Assets/paddle.gif"));
+            paddle = ImageIO.read(new File("../Assets/paddle.gif"));
         } catch (IOException ex) {
             Logger.getLogger(PongArea.class.getName()).log(Level.SEVERE, null, ex);
         }
