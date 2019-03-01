@@ -40,6 +40,7 @@ public class ZombieGame extends JFrame implements KeyListener, Runnable {
         ZombieGame zombieGame = new ZombieGame();
         zombieGame.setLayout(null);
         zombieGame.setBackground(Color.gray);
+	zombieGame.setSize(RIGHTEDGE, BOTTOMEDGE);
 
         area = new ZombieArea(zombieGame);
         zombieGame.add(area);

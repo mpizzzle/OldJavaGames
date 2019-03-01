@@ -39,7 +39,7 @@ public class PongGame extends JFrame implements KeyListener, Runnable {
 
         pongGame.setLayout(null);
         pongGame.setBackground(Color.black);
-
+        pongGame.setSize(RIGHTEDGE, BOTTOMEDGE);
         PongGame.area = new PongArea(pongGame);
         pongGame.add(area);
         //RIGHTEDGE = pongGame.getBounds().width - 1;
