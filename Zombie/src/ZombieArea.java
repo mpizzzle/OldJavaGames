@@ -34,6 +34,8 @@ public class ZombieArea extends JPanel implements ActionListener {
 
     @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
         if (myApplet == null) return;
         final int w = getBounds().width;
         final int h = getBounds().height;

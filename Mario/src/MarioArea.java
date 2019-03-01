@@ -1,10 +1,20 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
-public class MarioArea extends Panel {
-    
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+public class MarioArea extends JPanel implements ActionListener {
+    private static final long serialVersionUID = 5208087574284410378L;
     static int FLOORLEVEL = 589;
     static final int FLOORWIDTH = 150;
-    static int FLOORDIFF = 605-FLOORLEVEL;
+    static int FLOORDIFF = 605 - FLOORLEVEL;
     MarioGame myApplet = null;
     Image mariotitle;
     Image icefloor;
@@ -96,209 +106,225 @@ public class MarioArea extends Panel {
     Image Atom1;
     Image Atom2;
     Image Floor10;
-    MediaTracker mt=null;
+    MediaTracker mt = null;
     boolean showingMessage = false;
-    
+
     public MarioArea(MarioGame parent) {
-        mt=new MediaTracker(parent);
+        mt = new MediaTracker(parent);
         myApplet = parent;
-        upmushroom = load(parent,  "Assets\\1up!mushroom.gif");
-        goomba = load(parent,  "Assets\\goomba.gif");
-        goombaleft = load(parent,  "Assets\\goombaleft.gif");
-        goomba2 = load(parent,  "Assets\\goomba2.gif");
-        goomba2left = load(parent,  "Assets\\goombaleft2.gif");
-        squishedgoomba = load(parent,  "Assets\\goombasquished.gif");
-        
-        kooparedf = load(parent,  "Assets\\koopaparatroopa1.gif");
-        koopared = load(parent,  "Assets\\koopaparatroopa2.gif");
-        redshell = load(parent,  "Assets\\koopaparatroopashell.gif");
-        
-        kooparedfleft = load(parent,  "Assets\\koopaparatroopa1left.gif");
-        kooparedleft = load(parent,  "Assets\\koopaparatroopa2left.gif");
-        koopagreenleft = load(parent,  "Assets\\koopatroopa.gif");
-        
-        koopagreen = load(parent,  "Assets\\koopatroopaleft.gif");
-        greenshell = load(parent,  "Assets\\koopatroopashell.gif");
-        
-        hero1 = load(parent,  "Assets\\mario1.gif");
-        hero1left = load(parent,  "Assets\\mario1left.gif");
-        hero2 = load(parent,  "Assets\\mario2.gif");
-        hero2left = load(parent,  "Assets\\mario2left.gif");
-        herocrouch = load(parent,  "Assets\\mariocrouch.gif");
-        herocrouchleft = load(parent,  "Assets\\mariocrouchleft.gif");
-        herojump = load(parent, "Assets\\mariojump.gif");
-        herojumpleft = load(parent,  "Assets\\mariojumpleft.gif");
-        obstacle = load(parent,  "Assets\\mariopipe.gif");
-        tallobstacle = load(parent,  "Assets\\mariopipe2.gif");
-        herostand = load(parent,  "Assets\\mariostand.gif");
-        herostandleft = load(parent,  "Assets\\mariostandleft.gif");
-        
-        piranhapeep = load(parent,  "Assets\\piranhaplanthugepeep.gif");
-        piranhapeepo = load(parent,  "Assets\\piranhaplanthugepeepo.gif");
-        piranhapeepy = load(parent,  "Assets\\piranhaplanthugepeepy.gif");
-        
-        piranha1 = load(parent, "Assets\\piranhaplant1huge.gif");
-        piranha2 = load(parent, "Assets\\piranhaplant2huge.gif");
-        
-        poison = load(parent,  "Assets\\poisonmushroom.gif");
-        herowarp = load(parent,  "Assets\\mariowarp.gif");
-        icefloor  = load(parent, "Assets\\mariofloor.gif");
-        floor2 = load(parent, "Assets\\mariofloor2.gif");
-        floor3 = load(parent, "Assets\\mariofloor3.gif");
-        floor4 = load(parent, "Assets\\mariofloor4.gif");
-        floor5 = load(parent, "Assets\\mariofloor5.gif");
-        floor6 = load(parent, "Assets\\mariofloor6.gif");
-        floor7 = load(parent, "Assets\\mariofloor7.gif");
-        floor8 = load(parent, "Assets\\mariofloor8.gif");
-        floor9 = load(parent, "Assets\\mariofloor9.gif"); 
-        mariograss = load(parent, "Assets\\mariograss.gif");
-        p1fl = load(parent, "Assets\\piranhaflying1.gif");
-        p2fl = load(parent, "Assets\\piranhaflying2.gif");
-        p1fr = load(parent, "Assets\\piranharightflying1.gif");
-        p2fr = load(parent, "Assets\\piranharightflying2.gif");
-        
-        
-        levelcomplete = load(parent,  "Assets\\missioncomplete.gif");
-        herodead = load(parent,  "Assets\\mariodead.gif");
-        
-        Banzai = load(parent,  "Assets\\Banzai Bill.gif");
-        Bullet = load(parent,  "Assets\\Bullet Bill.gif");
-        
-        Wiglerleft = load(parent,  "Assets\\Wigler1Left.gif");
-        Wiglerright = load(parent, "Assets\\Wigler1Right.gif");
-        
-        Wiglerleft2 = load(parent,  "Assets\\Wigler2Left.gif");
-        Wiglerright2 = load(parent,  "Assets\\Wigler2Right.gif");
-        
-        Wiglerleft1 = load(parent,  "Assets\\Wigler1.5Left.gif");
-        Wiglerright1 = load(parent,  "Assets\\Wigler1.5Right.gif");
-        
-        Boo1 = load(parent,  "Assets\\boo1.gif");
-        Boo2 = load(parent,  "Assets\\boo2.gif");
-        Fireboo1 = load(parent,  "Assets\\fireboo1.gif");
-        Fireboo2 = load(parent,  "Assets\\fireboo2.gif");
-        Bobomb = load(parent,  "Assets\\bobomb.gif");
-        Bobomb2 = load(parent,  "Assets\\bobomb2.gif");
-        Bobombf = load(parent,  "Assets\\bobombr.gif");
-        Bobombf2 = load(parent,  "Assets\\bobombf2.gif");
-        Warship1 = load(parent,  "Assets\\warship1.gif");
-        Warship2 = load(parent,  "Assets\\warship2.gif");
-        
-        Yetil1 = load(parent,  "Assets\\yetileft1.gif");
-        Yetil2 = load(parent,  "Assets\\yetileft2.gif");
-        Yetir1 = load(parent,  "Assets\\yetiright1.gif");
-        Yetir2 = load(parent,  "Assets\\yetiright2.gif");
-       mariotitle = load(parent,   "Assets\\mariotitle.gif");
-        cube = load(parent,  "Assets\\cube.gif");
-        chainchomp1 = load(parent,  "Assets\\Chain Chomp!!!.gif");
-        chainchomp2 = load(parent,  "Assets\\Chain Chomp2!!!.gif");
-        robot = load(parent,  "Assets\\Robot.gif");
-        chainchompdead = load(parent,  "Assets\\Chain Chomp Dead!!!.gif");
-        
-        Atom1 = load(parent,  "Assets\\Atomic Atom1.gif");
-        Atom2 = load(parent,  "Assets\\Atomic Atom2.gif");
-        
-        Floor10 = load(parent,  "Assets\\mariofloor10.gif");
+        upmushroom = load(parent, "1up!mushroom.gif");
+        goomba = load(parent, "goomba.gif");
+        goombaleft = load(parent, "goombaleft.gif");
+        goomba2 = load(parent, "goomba2.gif");
+        goomba2left = load(parent, "goombaleft2.gif");
+        squishedgoomba = load(parent, "goombasquished.gif");
+
+        kooparedf = load(parent, "koopaparatroopa1.gif");
+        koopared = load(parent, "koopaparatroopa2.gif");
+        redshell = load(parent, "koopaparatroopashell.gif");
+
+        kooparedfleft = load(parent, "koopaparatroopa1left.gif");
+        kooparedleft = load(parent, "koopaparatroopa2left.gif");
+        koopagreenleft = load(parent, "koopatroopa.gif");
+
+        koopagreen = load(parent, "koopatroopaleft.gif");
+        greenshell = load(parent, "koopatroopashell.gif");
+
+        hero1 = load(parent, "mario1.gif");
+        hero1left = load(parent, "mario1left.gif");
+        hero2 = load(parent, "mario2.gif");
+        hero2left = load(parent, "mario2left.gif");
+        herocrouch = load(parent, "mariocrouch.gif");
+        herocrouchleft = load(parent, "mariocrouchleft.gif");
+        herojump = load(parent, "mariojump.gif");
+        herojumpleft = load(parent, "mariojumpleft.gif");
+        obstacle = load(parent, "mariopipe.gif");
+        tallobstacle = load(parent, "mariopipe2.gif");
+        herostand = load(parent, "mariostand.gif");
+        herostandleft = load(parent, "mariostandleft.gif");
+
+        piranhapeep = load(parent, "piranhaplanthugepeep.gif");
+        piranhapeepo = load(parent, "piranhaplanthugepeepo.gif");
+        piranhapeepy = load(parent, "piranhaplanthugepeepy.gif");
+
+        piranha1 = load(parent, "piranhaplant1huge.gif");
+        piranha2 = load(parent, "piranhaplant2huge.gif");
+
+        poison = load(parent, "poisonmushroom.gif");
+        herowarp = load(parent, "mariowarp.gif");
+        icefloor = load(parent, "mariofloor.gif");
+        floor2 = load(parent, "mariofloor2.gif");
+        floor3 = load(parent, "mariofloor3.gif");
+        floor4 = load(parent, "mariofloor4.gif");
+        floor5 = load(parent, "mariofloor5.gif");
+        floor6 = load(parent, "mariofloor6.gif");
+        floor7 = load(parent, "mariofloor7.gif");
+        floor8 = load(parent, "mariofloor8.gif");
+        floor9 = load(parent, "mariofloor9.gif");
+        mariograss = load(parent, "mariograss.gif");
+        p1fl = load(parent, "piranhaflying1.gif");
+        p2fl = load(parent, "piranhaflying2.gif");
+        p1fr = load(parent, "piranharightflying1.gif");
+        p2fr = load(parent, "piranharightflying2.gif");
+
+        levelcomplete = load(parent, "missioncomplete.gif");
+        herodead = load(parent, "mariodead.gif");
+
+        Banzai = load(parent, "Banzai Bill.gif");
+        Bullet = load(parent, "Bullet Bill.gif");
+
+        Wiglerleft = load(parent, "Wigler1Left.gif");
+        Wiglerright = load(parent, "Wigler1Right.gif");
+
+        Wiglerleft2 = load(parent, "Wigler2Left.gif");
+        Wiglerright2 = load(parent, "Wigler2Right.gif");
+
+        Wiglerleft1 = load(parent, "Wigler1.5Left.gif");
+        Wiglerright1 = load(parent, "Wigler1.5Right.gif");
+
+        Boo1 = load(parent, "boo1.gif");
+        Boo2 = load(parent, "boo2.gif");
+        Fireboo1 = load(parent, "fireboo1.gif");
+        Fireboo2 = load(parent, "fireboo2.gif");
+        Bobomb = load(parent, "bobomb.gif");
+        Bobomb2 = load(parent, "bobomb2.gif");
+        Bobombf = load(parent, "bobombr.gif");
+        Bobombf2 = load(parent, "bobombf2.gif");
+        Warship1 = load(parent, "warship1.gif");
+        Warship2 = load(parent, "warship2.gif");
+
+        Yetil1 = load(parent, "yetileft1.gif");
+        Yetil2 = load(parent, "yetileft2.gif");
+        Yetir1 = load(parent, "yetiright1.gif");
+        Yetir2 = load(parent, "yetiright2.gif");
+        mariotitle = load(parent, "mariotitle.gif");
+        cube = load(parent, "cube.gif");
+        chainchomp1 = load(parent, "Chain Chomp!!!.gif");
+        chainchomp2 = load(parent, "Chain Chomp2!!!.gif");
+        robot = load(parent, "Robot.gif");
+        chainchompdead = load(parent, "Chain Chomp Dead!!!.gif");
+
+        Atom1 = load(parent, "Atomic Atom1.gif");
+        Atom2 = load(parent, "Atomic Atom2.gif");
+
+        Floor10 = load(parent, "mariofloor10.gif");
     }
 
     Image load(MarioGame parent, String picture) {
-        Image im    = parent.getImage(myApplet.getCodeBase(), "Mario\\" + picture);
-        checkImage(im, picture);
-        return(im);
+        try {
+            Image im = ImageIO.read(new File("../Assets/" + picture));
+            checkImage(im, picture);
+            return (im);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
-    
+
     void checkImage(Image image, String name) {
         if (mt != null) {
-            mt.addImage(image,0);
+            mt.addImage(image, 0);
             try {
-                mt.waitForID(0,5000);
-            }
-            catch (InterruptedException ie) {
+                mt.waitForID(0, 5000);
+            } catch (InterruptedException ie) {
                 // nothing to do
             }
-            if (mt.isErrorID(0)) System.out.println("Image Not found: "+name.toString());
+            if (mt.isErrorID(0))
+                System.out.println("Image Not found: " + name.toString());
         }
     }
-    
-    public synchronized void paint (Graphics g) {
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Image obstacleimage, enemyimage;
-        if (myApplet == null || Fireboo2 == null) return;
+        if (myApplet == null || Fireboo2 == null)
+            return;
         final int w = getBounds().width;
-        final int h = getBounds().height;
+        //final int h = getBounds().height;
         g.setColor(Color.white);
         g.fillRect(0, 0, w, FLOORLEVEL); // don't white wash the floor!
-        FontMetrics fm = getFontMetrics(getFont());
-        
+
         g.setColor(Color.black);
-        int asc = fm.getAscent() + 4;
 
         // paint the floor
-        if (myApplet.floors[myApplet.level-1] != null) {
-            for (int pos=0; pos < w; pos+=FLOORWIDTH) {
-                g.drawImage(myApplet.floors[myApplet.level-1],pos, FLOORLEVEL,Color.black, null);
+        if (MarioGame.floors[MarioGame.level - 1] != null) {
+            for (int pos = 0; pos < w; pos += FLOORWIDTH) {
+                g.drawImage(MarioGame.floors[MarioGame.level - 1], pos, FLOORLEVEL, Color.black, null);
             }
         }
-        if (!myApplet.juststarted) {
-            if (myApplet.obstaclePositions != null)  {
+        if (!MarioGame.juststarted) {
+            if (MarioGame.obstaclePositions != null) {
                 myApplet.changePageIfNecessary();
-                // show the obstacles from right to left (because pipes have white space to their left but not their right)
-                for (int i=myApplet.obstacleNumber-1; i >= 0; i--) {
+                // show the obstacles from right to left (because pipes have white space to
+                // their left but not their right)
+                for (int i = MarioGame.obstacleNumber - 1; i >= 0; i--) {
                     obstacleimage = myApplet.getObstacleImage(i);
-                    if (myApplet.isTall[i]) obstacleimage = tallobstacle; // only one image for this for now
-                    g.drawImage(obstacleimage, myApplet.obstaclePositions[i].x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.obstaclePositions[i].y,Color.white, null);
+                    if (MarioGame.isTall[i])
+                        obstacleimage = tallobstacle; // only one image for this for now
+                    g.drawImage(obstacleimage,
+                            MarioGame.obstaclePositions[i].x - (MarioGame.page * MarioGame.PAGEWIDTH),
+                            MarioGame.obstaclePositions[i].y, Color.white, null);
                 }
             }
 
             // show the enemies
-            if (myApplet.enemyPositions != null)  {
-                for (int i=0; i < myApplet.enemyNumber; i++) {
-                    //if (!myApplet.enemyDead[i]) {
-                        enemyimage = myApplet.getEnemyImage(i);
-                        g.drawImage(enemyimage, myApplet.enemyPositions[i].x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.enemyPositions[i].y,null);
-                    //}
+            if (MarioGame.enemyPositions != null) {
+                for (int i = 0; i < MarioGame.enemyNumber; i++) {
+                    // if (!myApplet.enemyDead[i]) {
+                    enemyimage = myApplet.getEnemyImage(i);
+                    g.drawImage(enemyimage, MarioGame.enemyPositions[i].x - (MarioGame.page * MarioGame.PAGEWIDTH),
+                            MarioGame.enemyPositions[i].y, null);
+                    // }
                 }
             }
 
-            // draw Hero (on top  of preceding images)
-            if (myApplet.playerPosition != null) {
+            // draw Hero (on top of preceding images)
+            if (MarioGame.playerPosition != null) {
                 // show the player
                 Image herosimage = myApplet.getHeroImage();
-                if (myApplet.herocrouching) { 
-                    if (myApplet.heroleft) 
+                if (MarioGame.herocrouching) {
+                    if (MarioGame.heroleft)
                         herosimage = herocrouchleft;
-                    else 
+                    else
                         herosimage = herocrouch;
                 }
-                if (myApplet.jumping) { 
-                    if (myApplet.heroleft) 
+                if (MarioGame.jumping) {
+                    if (MarioGame.heroleft)
                         herosimage = herojumpleft;
-                    else 
+                    else
                         herosimage = herojump;
                 }
-                g.drawImage(herosimage, myApplet.playerPosition.x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.playerPosition.y,/*Color.white,*/ null);
+                g.drawImage(herosimage, MarioGame.playerPosition.x - (MarioGame.page * MarioGame.PAGEWIDTH),
+                        MarioGame.playerPosition.y, /* Color.white, */ null);
             }
         }
-        
+
         // draw warp image (on top of Hero)
-        if (myApplet.warpzone != null) {
+        if (MarioGame.warpzone != null) {
             // show the warp zone at the end of the level
-            g.drawImage(herowarp, myApplet.warpzone.x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.warpzone.y,Color.white, null);
+            g.drawImage(herowarp, MarioGame.warpzone.x - (MarioGame.page * MarioGame.PAGEWIDTH), MarioGame.warpzone.y,
+                    Color.white, null);
         }
-        
-        if (myApplet.ingame == false && !myApplet.juststarted) {
-            if (myApplet.dead) {
+
+        if (MarioGame.ingame == false && !MarioGame.juststarted) {
+            if (MarioGame.dead) {
                 // Hero is dead
-                g.drawImage(herodead, myApplet.getBounds().width/2, getBounds().height/2,Color.white, null);
-            }
-            else {
+                g.drawImage(herodead, myApplet.getBounds().width / 2, getBounds().height / 2, Color.white, null);
+            } else {
                 // level complete
-                g.drawImage(levelcomplete, myApplet.getBounds().width/2, getBounds().height/2,Color.white, null);
+                g.drawImage(levelcomplete, myApplet.getBounds().width / 2, getBounds().height / 2, Color.white, null);
             }
-            showingMessage=true;
-        }
-        else
+            showingMessage = true;
+        } else
             showingMessage = false;
-    
-    myApplet.setSomethingChangedSinceRepaint(false);
+
+        myApplet.setSomethingChangedSinceRepaint(false);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        repaint();
     }
 }
