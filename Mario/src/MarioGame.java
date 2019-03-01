@@ -31,7 +31,7 @@ public class MarioGame extends JFrame implements KeyListener, Runnable {
     static int RIGHT = 0;
     // the next 2 constants are overridden in init once we know the screen size
     static int RIGHTEDGE = 789;
-    static int BOTTOMEDGE = 900;
+    static int BOTTOMEDGE = 800;
     static int PAGEWIDTH = 741;
 
     static Point IMAGESIZE = new Point(152, 107);
@@ -166,7 +166,7 @@ public class MarioGame extends JFrame implements KeyListener, Runnable {
         MarioGame marioGame = new MarioGame();
         marioGame.setLayout(null);
         marioGame.setBackground(Color.white);
-
+        marioGame.setSize(RIGHTEDGE, BOTTOMEDGE);
         area = new MarioArea(marioGame);
         marioGame.add(area);
         //RIGHTEDGE = (marioGame.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
