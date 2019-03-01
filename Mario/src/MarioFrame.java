@@ -1,5 +1,3 @@
-package Mario;
-
 import java.awt.Frame;
 
 public class MarioFrame extends Frame {

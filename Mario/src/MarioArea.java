@@ -1,5 +1,3 @@
-package Mario;
-
 import java.awt.*;
 
 public class MarioArea extends Panel {
@@ -202,6 +200,7 @@ public class MarioArea extends Panel {
         
         Floor10 = load(parent,  "Assets\\mariofloor10.gif");
     }
+
     Image load(MarioGame parent, String picture) {
         Image im    = parent.getImage(myApplet.getCodeBase(), "Mario\\" + picture);
         checkImage(im, picture);

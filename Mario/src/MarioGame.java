@@ -1,8 +1,6 @@
 /* Copyright (c) Mary Percival 2003                          */
 /* Mario game                      Created May 2003          */
 
-package  Mario;
-
 import  java.awt.*;
 import  java.awt.event.*;
 import  java.applet.*;
@@ -330,6 +328,7 @@ public class MarioGame extends Applet implements KeyListener, Runnable {
         for (int i=0; i < MAXLEVEL; i++) {
             floors[i] = area.floor4;
         }
+
         floors[0] = area.floor4;
         floors[1] = area.floor5;
         floors[2] = area.floor3;

@@ -9,3 +9,4 @@ resource.h
 thumbs.db
 CaveGame/mp3s/
 #java.policy.applet
+/.metadata/*
