@@ -1,5 +1,3 @@
-package Link;
-
 import java.awt.*;
 
 public class LinkArea extends Panel {

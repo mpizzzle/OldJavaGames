@@ -1,13 +1,16 @@
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+
 /* Copyright (c) Mary Percival 2003                          */
 /* Link game                      Created May 2003          */
 
-package  Link;
-
-import  java.awt.*;
-import  java.awt.event.*;
-import  java.applet.*;
-
-public class LinkGame extends Applet implements KeyListener, Runnable {
+public class LinkGame extends JFrame implements KeyListener, Runnable {
+    private static final long serialVersionUID = 136423218680421502L;
     // all member variables 'static' because shared with the enemy action thread
     static LinkArea area;
     static boolean finished = false;
@@ -78,7 +81,6 @@ public class LinkGame extends Applet implements KeyListener, Runnable {
 
         area = new LinkArea(this);
         add(area);
-        FontMetrics fm = getFontMetrics(getFont());
         XAMOUNT = 12;
         YAMOUNT = 12;
         RIGHTEDGE = (getBounds().width/XAMOUNT)*XAMOUNT +LEFTEDGE;
@@ -169,9 +171,8 @@ public class LinkGame extends Applet implements KeyListener, Runnable {
     public void doLevel(int level) {
         // this runs one 'level'
         juststarted = true;
-        Point temppoint;
         
-        showStatus("Started level " + level);
+        System.out.println("Started level " + level);
         
         // position Hero at the bottom left
         playerPosition = new Point(LEFTEDGE,GROUNDLEVEL);
@@ -328,12 +329,12 @@ public class LinkGame extends Applet implements KeyListener, Runnable {
                     getShieldOut();
                 }
                 if (isEnemyPosition(playerPosition)) {
-                    showStatus("The Player ran into an enemy!! Press the Enter key to restart the level");
+                    System.out.println("The Player ran into an enemy!! Press the Enter key to restart the level");
                     ingame = false;
                 }
                 //area.repaint();
-                //showStatus("Hero's position = (" + playerPosition.x + ", " + playerPosition.y + ")");
-                showStatus(" ");
+                //System.out.println("Hero's position = (" + playerPosition.x + ", " + playerPosition.y + ")");
+                System.out.println(" ");
             } // if valid key press
         }    
         else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -410,21 +411,21 @@ public class LinkGame extends Applet implements KeyListener, Runnable {
                     // if there is a obstacle at that position, fall into it and decrement count of enemies
                     // and set that enemy's position to -1, -1
                     if (isObstaclePosition(enemyPositions[i])) {
-                        showStatus("A enemy fell into a obstacle");
+                        System.out.println("A enemy fell into a obstacle");
                         
                         enemyPositions[i] = new Point(-1, -1);
                         enemiesRemaining--;
-                        showStatus(enemyNumber-enemiesRemaining + " down, " + enemiesRemaining + " to go...");
+                        System.out.println(enemyNumber-enemiesRemaining + " down, " + enemiesRemaining + " to go...");
                     }
                     // if player is caught by a enemy or all enemies are gone, end the game
                     if (isPlayerPosition(enemyPositions[i])) {
-                        showStatus("\"Mmm! Brains...\". The Player is dead. Press the Enter key to restart the level");
+                        System.out.println("\"Mmm! Brains...\". The Player is dead. Press the Enter key to restart the level");
                         level--; // because it will be incremented in a minute and we want to stay on the same 'level'
                         ingame = false;
                     }
                 }
                 if (enemiesRemaining == 0) {
-                    showStatus("All the enemies are gone -- you won!! Press the Enter key to start the next level");
+                    System.out.println("All the enemies are gone -- you won!! Press the Enter key to start the next level");
                     enemyNumber++;
                     if (obstacleNumber > 2) obstacleNumber--;
                     ingame = false;

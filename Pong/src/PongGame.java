@@ -79,7 +79,7 @@ public class PongGame extends JFrame implements KeyListener, Runnable {
             goingDown[i] = true;
         }
 
-        // showStatus("Started level " + level);
+        // System.out.println("Started level " + level);
 
         // randomly position 1 player, x balls
         playerPosition = new Point(RIGHTEDGE - 20, 0);
