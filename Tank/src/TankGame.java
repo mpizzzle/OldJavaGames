@@ -1,16 +1,18 @@
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+
 /* Copyright (c) Mary Percival 2002                          */
 /* Tank game                      Created October 2002     */
 
-package  Tank;
-
-import  java.awt.*;
-import  java.awt.event.*;
-import  java.applet.*;
-
-public class TankGame extends Applet implements KeyListener, Runnable {
+public class TankGame extends JFrame implements KeyListener, Runnable {
+    private static final long serialVersionUID = 2750159877444817519L;
     // all member variables 'static' because shared with the enemy action thread
     private static TankArea area;
-    private static boolean finished = false;
     private static boolean ingame = false;
     private boolean juststarted = false;
     private static int level = 1;
@@ -18,286 +20,273 @@ public class TankGame extends Applet implements KeyListener, Runnable {
     protected static Point[] enemyPositions;
     protected static Point playerPosition;
     protected static Point[] pitPositions;
-    private Thread enemies;
-    
+    private static Thread enemies;
+
     protected static int pitNumber = 15;
     protected static int enemyNumber = 1;
     protected static int RIGHTEDGE = 1200;
     protected static final int LEFTEDGE = 0;
     protected static final int TOPEDGE = 0;
     protected static int BOTTOMEDGE = 1000;
-    protected static int XAMOUNT=5;
-    protected static int YAMOUNT=5;
+    protected static int XAMOUNT = 5;
+    protected static int YAMOUNT = 5;
     private static final int X = 1;
     private static final int Y = 2;
-    private static final int NOT=3;
+    private static final int NOT = 3;
     private static final int DELAY = 125;
-    protected int explosionx =-1, explosiony=-1;
-    
+    protected int explosionx = -1, explosiony = -1;
+
     // tank game stuff
-    boolean up=true, down=false, left=false, right=false, shooting=false;
-    int NOTSHOOTING=0, SHOOTING=1, FIRSTUP=0, FIRSTDOWN=2, FIRSTLEFT=4, FIRSTRIGHT=6;
-    int goodImageNo=FIRSTUP; // TODO - randomise
+    boolean up = true, down = false, left = false, right = false, shooting = false;
+    static int NOTSHOOTING = 0;
+    static int SHOOTING = 1;
+    static int FIRSTUP = 0;
+    static int FIRSTDOWN = 2;
+    static int FIRSTLEFT = 4;
+    static int FIRSTRIGHT = 6;
+    int goodImageNo = FIRSTUP; // TODO - randomise
     int[] enemyImageNo;
     boolean[] enemyShooting;
     Image[][] goodImages = new Image[8][2]; // up up2 down down2 left left2 right right2 x SHOOTING and NON_SHOOTING
     Image[][] badImages = new Image[8][2]; // up up2 down down2 left left2 right right2 x SHOOTING and NON_SHOOTING
-    
-	public void init() {
 
-        setLayout(null);  
-        setBackground(Color.gray);
+    public static void main(String[] args) {
+        TankGame tankGame = new TankGame();
+        tankGame.setLayout(null);
+        tankGame.setBackground(Color.gray);
+        tankGame.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new TankArea(this);
-        add(area);
-        FontMetrics fm = getFontMetrics(getFont());
-        RIGHTEDGE = getBounds().width - 1;
-        BOTTOMEDGE = getBounds().height - 1;
+        area = new TankArea(tankGame);
+        tankGame.add(area);
+        //RIGHTEDGE = tankGame.getBounds().width - 1;
+        //BOTTOMEDGE = tankGame.getBounds().height - 1;
         XAMOUNT = 12;
         YAMOUNT = 12;
-        setVisible(true);
-        area.setBounds(0,0,RIGHTEDGE,BOTTOMEDGE);
+        tankGame.setVisible(true);
+        area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        addKeyListener(this);
-        area.addKeyListener(this);
+        tankGame.addKeyListener(tankGame);
+        area.addKeyListener(tankGame);
         area.requestFocus();
+
+        tankGame.goodImages[FIRSTUP][NOTSHOOTING] = area.tankup;
+        tankGame.goodImages[FIRSTUP + 1][NOTSHOOTING] = area.tankup2;
+        tankGame.goodImages[FIRSTUP][SHOOTING] = area.tankupshoot;
+        tankGame.goodImages[FIRSTUP + 1][SHOOTING] = area.tankupshoot2;
+
+        tankGame.goodImages[FIRSTDOWN][NOTSHOOTING] = area.tankdown;
+        tankGame.goodImages[FIRSTDOWN + 1][NOTSHOOTING] = area.tankdown2;
+        tankGame.goodImages[FIRSTDOWN][SHOOTING] = area.tankdownshoot;
+        tankGame.goodImages[FIRSTDOWN + 1][SHOOTING] = area.tankdownshoot2;
+
+        tankGame.goodImages[FIRSTLEFT][NOTSHOOTING] = area.tankleft;
+        tankGame.goodImages[FIRSTLEFT + 1][NOTSHOOTING] = area.tankleft2;
+        tankGame.goodImages[FIRSTLEFT][SHOOTING] = area.tankleftshoot;
+        tankGame.goodImages[FIRSTLEFT + 1][SHOOTING] = area.tankleftshoot2;
         
-        goodImages[FIRSTUP][NOTSHOOTING] = area.tankup;
-        goodImages[FIRSTUP+1][NOTSHOOTING] = area.tankup2;
-        goodImages[FIRSTUP][SHOOTING] = area.tankupshoot;
-        goodImages[FIRSTUP+1][SHOOTING] = area.tankupshoot2;
+        tankGame.goodImages[FIRSTRIGHT][NOTSHOOTING] = area.tankright;
+        tankGame.goodImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.tankright2;
+        tankGame.goodImages[FIRSTRIGHT][SHOOTING] = area.tankrightshoot;
+        tankGame.goodImages[FIRSTRIGHT + 1][SHOOTING] = area.tankrightshoot2;
 
-        goodImages[FIRSTDOWN][NOTSHOOTING] = area.tankdown;
-        goodImages[FIRSTDOWN+1][NOTSHOOTING] = area.tankdown2;
-        goodImages[FIRSTDOWN][SHOOTING] = area.tankdownshoot;
-        goodImages[FIRSTDOWN+1][SHOOTING] = area.tankdownshoot2;
+        tankGame.badImages[FIRSTUP][NOTSHOOTING] = area.badtankup;
+        tankGame.badImages[FIRSTUP + 1][NOTSHOOTING] = area.badtankup2;
+        tankGame.badImages[FIRSTUP][SHOOTING] = area.badtankupshoot;
+        tankGame.badImages[FIRSTUP + 1][SHOOTING] = area.badtankupshoot2;
 
-        goodImages[FIRSTLEFT][NOTSHOOTING] = area.tankleft;
-        goodImages[FIRSTLEFT+1][NOTSHOOTING] = area.tankleft2;
-        goodImages[FIRSTLEFT][SHOOTING] = area.tankleftshoot;
-        goodImages[FIRSTLEFT+1][SHOOTING] = area.tankleftshoot2;
-        
-        goodImages[FIRSTRIGHT][NOTSHOOTING] = area.tankright;
-        goodImages[FIRSTRIGHT+1][NOTSHOOTING] = area.tankright2;
-        goodImages[FIRSTRIGHT][SHOOTING] = area.tankrightshoot;
-        goodImages[FIRSTRIGHT+1][SHOOTING] = area.tankrightshoot2;
+        tankGame.badImages[FIRSTDOWN][NOTSHOOTING] = area.badtankdown;
+        tankGame.badImages[FIRSTDOWN + 1][NOTSHOOTING] = area.badtankdown2;
+        tankGame.badImages[FIRSTDOWN][SHOOTING] = area.badtankdownshoot;
+        tankGame.badImages[FIRSTDOWN + 1][SHOOTING] = area.badtankdownshoot2;
 
-        badImages[FIRSTUP][NOTSHOOTING] = area.badtankup;
-        badImages[FIRSTUP+1][NOTSHOOTING] = area.badtankup2;
-        badImages[FIRSTUP][SHOOTING] = area.badtankupshoot;
-        badImages[FIRSTUP+1][SHOOTING] = area.badtankupshoot2;
+        tankGame.badImages[FIRSTLEFT][NOTSHOOTING] = area.badtankleft;
+        tankGame.badImages[FIRSTLEFT + 1][NOTSHOOTING] = area.badtankleft2;
+        tankGame.badImages[FIRSTLEFT][SHOOTING] = area.badtankleftshoot;
+        tankGame.badImages[FIRSTLEFT + 1][SHOOTING] = area.badtankleftshoot2;
 
-        badImages[FIRSTDOWN][NOTSHOOTING] = area.badtankdown;
-        badImages[FIRSTDOWN+1][NOTSHOOTING] = area.badtankdown2;
-        badImages[FIRSTDOWN][SHOOTING] = area.badtankdownshoot;
-        badImages[FIRSTDOWN+1][SHOOTING] = area.badtankdownshoot2;
+        tankGame.badImages[FIRSTRIGHT][NOTSHOOTING] = area.badtankright;
+        tankGame.badImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.badtankright2;
+        tankGame.badImages[FIRSTRIGHT][SHOOTING] = area.badtankrightshoot;
+        tankGame.badImages[FIRSTRIGHT + 1][SHOOTING] = area.badtankrightshoot2;
 
-        badImages[FIRSTLEFT][NOTSHOOTING] = area.badtankleft;
-        badImages[FIRSTLEFT+1][NOTSHOOTING] = area.badtankleft2;
-        badImages[FIRSTLEFT][SHOOTING] = area.badtankleftshoot;
-        badImages[FIRSTLEFT+1][SHOOTING] = area.badtankleftshoot2;
-        
-        badImages[FIRSTRIGHT][NOTSHOOTING] = area.badtankright;
-        badImages[FIRSTRIGHT+1][NOTSHOOTING] = area.badtankright2;
-        badImages[FIRSTRIGHT][SHOOTING] = area.badtankrightshoot;
-        badImages[FIRSTRIGHT+1][SHOOTING] = area.badtankrightshoot2;
-
-        enemies = new Thread(this);
+        enemies = new Thread(tankGame);
         enemies.start();
     }
-    
-    public void start() {
-        // called by Applet Viewer or Browser
-        doLevel(1);
-    }
-    
+
     public void doLevel(int level) {
         // this runs one 'level'
-        // create arrays of pits and enemies here. 
+        // create arrays of pits and enemies here.
         // Maybe each level will have different numbers?
         juststarted = true;
         Point temppoint;
         pitPositions = new Point[pitNumber];
         enemyPositions = new Point[enemyNumber];
-        for (int i=0; i < enemyNumber; i++) enemyPositions[i] = new Point(0,0);
-        for (int i=0; i < pitNumber; i++) pitPositions[i] = new Point(0,0);
-        
+        for (int i = 0; i < enemyNumber; i++)
+            enemyPositions[i] = new Point(0, 0);
+        for (int i = 0; i < pitNumber; i++)
+            pitPositions[i] = new Point(0, 0);
+
         enemyImageNo = new int[enemyNumber];
         enemyShooting = new boolean[enemyNumber];
-        for (int i=0; i < enemyNumber; i++) {
+        for (int i = 0; i < enemyNumber; i++) {
             enemyShooting[i] = false;
             enemyImageNo[i] = FIRSTUP; // TODO - randomise
         }
-        showStatus("Started level " + level + ": " + enemyNumber + " enemies and " + pitNumber + " pits");
-        
+        System.out.println("Started level " + level + ": " + enemyNumber + " enemies and " + pitNumber + " pits");
+
         // randomly position 1 player, x enemies and y pits
         playerPosition = randomPosition();
-        
+
         for (int i = 0; i < enemyNumber; i++) {
             temppoint = randomPosition();
-            while (isPlayerPosition(temppoint) ||
-                   isTankPosition(temppoint)) {
+            while (isPlayerPosition(temppoint) || isTankPosition(temppoint)) {
                 // don't position any enemy on the player or on top of another enemy
                 temppoint = randomPosition();
             }
             enemyPositions[i] = temppoint;
         }
-        
+
         for (int i = 0; i < pitNumber; i++) {
             temppoint = randomPosition();
-            while (isPlayerPosition(temppoint) ||
-                   isPitPosition(temppoint)    ||
-                   isTankPosition(temppoint)) {
+            while (isPlayerPosition(temppoint) || isPitPosition(temppoint) || isTankPosition(temppoint)) {
                 // don't position any enemy at the player, an enemy or another pit
                 temppoint = randomPosition();
             }
             pitPositions[i] = temppoint;
         }
-        
-        enemiesRemaining=enemyNumber;
+
+        enemiesRemaining = enemyNumber;
         // paint the panel here
         area.repaint();
         ingame = true;
     }
-    
+
     synchronized void incrementImageNo() {
         goodImageNo++;
-        if ((goodImageNo % 2)  == 0) goodImageNo -= 2;
+        if ((goodImageNo % 2) == 0)
+            goodImageNo -= 2;
     }
-    
+
     synchronized void incrementImageNo(int enemyNo) {
         enemyImageNo[enemyNo]++;
-        if ((enemyImageNo[enemyNo] % 2)  == 0) enemyImageNo[enemyNo] -= 2;
+        if ((enemyImageNo[enemyNo] % 2) == 0)
+            enemyImageNo[enemyNo] -= 2;
     }
-    
+
     void goLeft(int enemyno) {
-        if (enemyImageNo[enemyno] == FIRSTLEFT || enemyImageNo[enemyno] == FIRSTLEFT+1) {
+        if (enemyImageNo[enemyno] == FIRSTLEFT || enemyImageNo[enemyno] == FIRSTLEFT + 1) {
             incrementImageNo(enemyno);
-        }
-        else 
+        } else
             enemyImageNo[enemyno] = FIRSTLEFT;
     }
-    
+
     void goLeft() {
-        if (goodImageNo == FIRSTLEFT || goodImageNo == FIRSTLEFT+1) {
+        if (goodImageNo == FIRSTLEFT || goodImageNo == FIRSTLEFT + 1) {
             incrementImageNo();
-        }
-        else 
+        } else
             goodImageNo = FIRSTLEFT;
     }
-    
+
     void goRight(int enemyno) {
-        if (enemyImageNo[enemyno] == FIRSTRIGHT || enemyImageNo[enemyno] == FIRSTRIGHT+1) {
+        if (enemyImageNo[enemyno] == FIRSTRIGHT || enemyImageNo[enemyno] == FIRSTRIGHT + 1) {
             incrementImageNo(enemyno);
-        }
-        else 
+        } else
             enemyImageNo[enemyno] = FIRSTRIGHT;
     }
-    
+
     void goRight() {
-        if (goodImageNo == FIRSTRIGHT || goodImageNo == FIRSTRIGHT+1) {
+        if (goodImageNo == FIRSTRIGHT || goodImageNo == FIRSTRIGHT + 1) {
             incrementImageNo();
-        }
-        else 
+        } else
             goodImageNo = FIRSTRIGHT;
     }
-    
+
     void goUp(int enemyno) {
-        if (enemyImageNo[enemyno] == FIRSTUP || enemyImageNo[enemyno] == FIRSTUP+1) {
+        if (enemyImageNo[enemyno] == FIRSTUP || enemyImageNo[enemyno] == FIRSTUP + 1) {
             incrementImageNo(enemyno);
-        }
-        else 
+        } else
             enemyImageNo[enemyno] = FIRSTUP;
     }
-    
+
     void goUp() {
-        if (goodImageNo == FIRSTUP || goodImageNo == FIRSTUP+1) {
+        if (goodImageNo == FIRSTUP || goodImageNo == FIRSTUP + 1) {
             incrementImageNo();
-        }
-        else 
+        } else
             goodImageNo = FIRSTUP;
     }
-    
+
     void goDown(int enemyno) {
-        if (enemyImageNo[enemyno] == FIRSTDOWN || enemyImageNo[enemyno] == FIRSTDOWN+1) {
+        if (enemyImageNo[enemyno] == FIRSTDOWN || enemyImageNo[enemyno] == FIRSTDOWN + 1) {
             incrementImageNo(enemyno);
-        }
-        else 
+        } else
             enemyImageNo[enemyno] = FIRSTDOWN;
     }
-    
+
     void goDown() {
-        if (goodImageNo == FIRSTDOWN || goodImageNo == FIRSTDOWN+1) {
+        if (goodImageNo == FIRSTDOWN || goodImageNo == FIRSTDOWN + 1) {
             incrementImageNo();
-        }
-        else 
+        } else
             goodImageNo = FIRSTDOWN;
     }
-    
+
     private Point randomPosition() {
-        return new Point( (int) (Math.random() * RIGHTEDGE) / XAMOUNT * XAMOUNT, 
-                          (int) (Math.random() * BOTTOMEDGE) / YAMOUNT * YAMOUNT);
+        return new Point((int) (Math.random() * RIGHTEDGE) / XAMOUNT * XAMOUNT,
+                (int) (Math.random() * BOTTOMEDGE) / YAMOUNT * YAMOUNT);
     }
-    
+
     private boolean isPlayerPosition(Point p) {
-        return(p.x == playerPosition.x && p.y == playerPosition.y);
+        return (p.x == playerPosition.x && p.y == playerPosition.y);
     }
-    
+
     private boolean isTankPosition(Point p) {
-        for (int i = 0 ; i < enemyNumber; i++) {
-            if(p.x == enemyPositions[i].x && p.y == enemyPositions[i].y) return(true);
+        for (int i = 0; i < enemyNumber; i++) {
+            if (p.x == enemyPositions[i].x && p.y == enemyPositions[i].y)
+                return (true);
         }
-        return(false);
+        return (false);
     }
-    
+
     private int isInline(Point p) {
         // is the new position in the same row as the player?
         if (Math.abs(p.x - playerPosition.x) < XAMOUNT) {
             // see whether there is another enemy between this position and the player
             if (playerPosition.y > p.y) {
-                for (int i = 0 ; i < enemyNumber; i++) {
-                    if(p.x == enemyPositions[i].x && p.y < enemyPositions[i].y) return(X);
+                for (int i = 0; i < enemyNumber; i++) {
+                    if (p.x == enemyPositions[i].x && p.y < enemyPositions[i].y)
+                        return (X);
+                }
+            } else { // playerPosition y < p.y
+                for (int i = 0; i < enemyNumber; i++) {
+                    if (p.x == enemyPositions[i].x && p.y > enemyPositions[i].y)
+                        return (X);
                 }
             }
-            else { // playerPosition y < p.y
-                for (int i = 0 ; i < enemyNumber; i++) {
-                    if(p.x == enemyPositions[i].x && p.y > enemyPositions[i].y) return(X);
-                }
-            }
-        }
-        else if (Math.abs(p.y - playerPosition.y) < YAMOUNT) {
+        } else if (Math.abs(p.y - playerPosition.y) < YAMOUNT) {
             // see whether there is another enemy between this position and the player
             if (playerPosition.x > p.x) {
-                for (int i = 0 ; i < enemyNumber; i++) {
-                    if(p.y == enemyPositions[i].y && p.x < enemyPositions[i].x) return(Y);
+                for (int i = 0; i < enemyNumber; i++) {
+                    if (p.y == enemyPositions[i].y && p.x < enemyPositions[i].x)
+                        return (Y);
                 }
-            }
-            else { // playerPosition x < p.x
-                for (int i = 0 ; i < enemyNumber; i++) {
-                    if(p.y == enemyPositions[i].y && p.x > enemyPositions[i].x) return(Y);
+            } else { // playerPosition x < p.x
+                for (int i = 0; i < enemyNumber; i++) {
+                    if (p.y == enemyPositions[i].y && p.x > enemyPositions[i].x)
+                        return (Y);
                 }
             }
         }
-        return(NOT);
+        return (NOT);
     }
-    
+
     private boolean isPitPosition(Point p) {
-        for (int i = 0 ; i < pitNumber; i++) {
-            if(p.x == pitPositions[i].x && p.y == pitPositions[i].y) return(true);
+        for (int i = 0; i < pitNumber; i++) {
+            if (p.x == pitPositions[i].x && p.y == pitPositions[i].y)
+                return (true);
         }
-        return(false);
+        return (false);
     }
-    
-    public void finished() {
-        finished = true;
-        System.exit(0);
-    }
-    
-    public String getAppletInfo() {
-        return ("Tank Game");
-    } 
-    
+
     private Point moveCloser(int enemyNo, Point original, Point target) {
         Point result = new Point(original);
         int inlineType = isInline(original);
@@ -306,147 +295,145 @@ public class TankGame extends Applet implements KeyListener, Runnable {
             // move in X direction
             if (inlineType != X) {
                 if (original.x < target.x) {
-                    result.x = original.x + (XAMOUNT/2);
+                    result.x = original.x + (XAMOUNT / 2);
                     goRight(enemyNo);
-                }
-                else if (original.x > target.x) {
-                    result.x = original.x - (XAMOUNT/2);
+                } else if (original.x > target.x) {
+                    result.x = original.x - (XAMOUNT / 2);
                     goLeft(enemyNo);
                 }
             }
-        }
-        else {
+        } else {
             // move in Y direction
             if (inlineType != Y) {
                 if (original.y < target.y) {
-                    result.y = original.y + (YAMOUNT/2);
+                    result.y = original.y + (YAMOUNT / 2);
                     goDown(enemyNo);
-                }
-                else if (original.y > target.y) {
-                    result.y = original.y - (YAMOUNT/2);
+                } else if (original.y > target.y) {
+                    result.y = original.y - (YAMOUNT / 2);
                     goUp(enemyNo);
                 }
             }
         }
         /*
-        if (isTankPosition(result)) {
-            if (isTankPosition(new Point(result.x, original.y))) {
-                if (isTankPosition(new Point(original.x, result.y))) result = original;
-                else result = new Point(original.x, result.y);
-            }
-            else result = new Point(result.x, original.y);
-        }
-        */
+         * if (isTankPosition(result)) { if (isTankPosition(new Point(result.x,
+         * original.y))) { if (isTankPosition(new Point(original.x, result.y))) result =
+         * original; else result = new Point(original.x, result.y); } else result = new
+         * Point(result.x, original.y); }
+         */
         inlineType = isInline(result);
         if (inlineType == X) {
             // fire along the X axis
-        }
-        else if (inlineType == Y) {
+        } else if (inlineType == Y) {
             // fire along the Y axis
         }
-        return(result);
+        return (result);
     }
-    
-    private int randomMove() {
-        // return + or - value (randomly)
-        if (Math.random() >= 0.5) return(24);
-        else                    return(-24);
-    }
-    
-    
+
+    /*
+     * private int randomMove() { // return + or - value (randomly) if
+     * (Math.random() >= 0.5) return(24); else return(-24); }
+     */
+
     // this class will use just the key pressed event
+    @Override
     public void keyPressed(KeyEvent e) {
         if (ingame) {
-            if (!
-                ((e.getKeyCode() == KeyEvent.VK_DOWN  && playerPosition.y >= (BOTTOMEDGE - YAMOUNT)) ||
-                (e.getKeyCode() == KeyEvent.VK_UP    && playerPosition.y <= (TOPEDGE + YAMOUNT)) ||
-                (e.getKeyCode() == KeyEvent.VK_LEFT  && playerPosition.x <= (LEFTEDGE + XAMOUNT)) ||
-                (e.getKeyCode() == KeyEvent.VK_RIGHT && playerPosition.x >= (RIGHTEDGE - XAMOUNT)))) {
+            if (!((e.getKeyCode() == KeyEvent.VK_DOWN && playerPosition.y >= (BOTTOMEDGE - YAMOUNT))
+                    || (e.getKeyCode() == KeyEvent.VK_UP && playerPosition.y <= (TOPEDGE + YAMOUNT))
+                    || (e.getKeyCode() == KeyEvent.VK_LEFT && playerPosition.x <= (LEFTEDGE + XAMOUNT))
+                    || (e.getKeyCode() == KeyEvent.VK_RIGHT && playerPosition.x >= (RIGHTEDGE - XAMOUNT)))) {
                 // valid move: move the player and then move the enemies
-                if      (e.getKeyCode() == KeyEvent.VK_DOWN)  {
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     playerPosition.y += YAMOUNT;
                     goDown();
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_UP)    {
+                } else if (e.getKeyCode() == KeyEvent.VK_UP) {
                     playerPosition.y -= YAMOUNT;
                     goUp();
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_LEFT)  {
+                } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     playerPosition.x -= XAMOUNT;
                     goLeft();
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     playerPosition.x += XAMOUNT;
                     goRight();
                 }
                 if (isTankPosition(playerPosition)) {
-                    showStatus("The Player ran into an enemy!! Press the Enter key to restart the level");
+                    System.out.println("The Player ran into an enemy!! Press the Enter key to restart the level");
                     ingame = false;
                 }
                 if (isPitPosition(playerPosition)) {
-                    showStatus("The Player ran into a pit!! Press the Enter key to restart the level");
+                    System.out.println("The Player ran into a pit!! Press the Enter key to restart the level");
                     ingame = false;
                 }
                 area.repaint();
             } // if valid key press
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             doLevel(level++);
         }
     }
-    
+
+    @Override
     public void run() {
         while (true) {
             if (juststarted) {
-                try {Thread.sleep(750);}
-                catch (Exception e) {}
+                try {
+                    Thread.sleep(750);
+                } catch (Exception e) {
+                }
                 juststarted = false;
             }
-            try {Thread.sleep(DELAY);}
-            catch (InterruptedException e){}
+            try {
+                Thread.sleep(DELAY);
+            } catch (InterruptedException e) {
+            }
             if (ingame) {
                 // for each enemy, move the enemy closer to the player
-                for (int i=0; i < enemyPositions.length; i++) {
+                for (int i = 0; i < enemyPositions.length; i++) {
                     if (!deadTank(enemyPositions[i])) {
                         enemyPositions[i] = moveCloser(i, enemyPositions[i], playerPosition);
                     }
-                    // if there is a pit at that position, fall into it and decrement count of enemies
+                    // if there is a pit at that position, fall into it and decrement count of
+                    // enemies
                     // and set that enemy's position to -1, -1
                     if (isPitPosition(enemyPositions[i])) {
-                        showStatus("an enemy fell into a pit");
-                        explosionx=enemyPositions[i].x;
-                        explosiony=enemyPositions[i].y;
-                        
+                        System.out.println("an enemy fell into a pit");
+                        explosionx = enemyPositions[i].x;
+                        explosiony = enemyPositions[i].y;
+
                         enemyPositions[i] = new Point(-1, -1);
                         enemiesRemaining--;
-                        showStatus(enemyNumber-enemiesRemaining + " down, " + enemiesRemaining + " to go...");
+                        System.out.println(enemyNumber - enemiesRemaining + " down, " + enemiesRemaining + " to go...");
                     }
                     // if player is caught by an enemy or all enemies are gone, end the game
                     if (isPlayerPosition(enemyPositions[i])) {
-                        showStatus("\"Mmm! Brains...\". The Player is dead. Press the Enter key to restart the level");
-                        level--; // because it will be incremented in a minute and we want to stay on the same 'level'
+                        System.out.println(
+                                "\"Mmm! Brains...\". The Player is dead. Press the Enter key to restart the level");
+                        level--; // because it will be incremented in a minute and we want to stay on the same
+                                 // 'level'
                         ingame = false;
                     }
                 }
                 if (enemiesRemaining == 0) {
-                    showStatus("All the enemies are gone -- you won!! Press the Enter key to start the next level");
+                    System.out.println(
+                            "All the enemies are gone -- you won!! Press the Enter key to start the next level");
                     enemyNumber++;
-                    if (pitNumber > 2) pitNumber--;
+                    if (pitNumber > 2)
+                        pitNumber--;
                     ingame = false;
-                }
-                else area.repaint();
+                } else
+                    area.repaint();
             }
         }
     }
 
     private boolean deadTank(Point p) {
-        return(p.x == -1 && p.y ==-1);
+        return (p.x == -1 && p.y == -1);
     }
-    
+
+    @Override
     public void keyReleased(KeyEvent e) {
     }
-    
+
+    @Override
     public void keyTyped(KeyEvent e) {
     }
 }
-
