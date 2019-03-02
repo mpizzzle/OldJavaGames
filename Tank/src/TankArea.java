@@ -1,8 +1,13 @@
-package Tank;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
 
-import java.awt.*;
+import javax.swing.JPanel;
 
-public class TankArea extends Panel {
+public class TankArea extends JPanel {
+    private static final long serialVersionUID = -2906196036928924340L;
+
     TankGame myApplet = null;
 
 Image badtankdown2;
@@ -105,33 +110,32 @@ Image pitImage;
         }
     }
     
-    public void paint (Graphics g) {
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if (myApplet == null) return;
         final int w = getBounds().width;
         final int h = getBounds().height;
         g.setColor(Color.gray);
         g.fillRect(0, 0, w, h);
-        FontMetrics fm = getFontMetrics(getFont());
-        
         g.setColor(Color.black);
-        int asc = fm.getAscent() + 4;
 
-        if (myApplet.playerPosition != null) {
+        if (TankGame.playerPosition != null) {
             // show the player
             //g.drawString("#", myApplet.playerPosition.x, myApplet.playerPosition.y);
             int elem = myApplet.shooting ? myApplet.SHOOTING : myApplet.NOTSHOOTING;
-            g.drawImage(myApplet.goodImages[myApplet.goodImageNo][elem], myApplet.playerPosition.x, myApplet.playerPosition.y,Color.gray, null);
+            g.drawImage(myApplet.goodImages[myApplet.goodImageNo][elem], TankGame.playerPosition.x, TankGame.playerPosition.y,Color.gray, null);
 
             // show the pits
-            for (int i=0; i < myApplet.pitPositions.length; i++) {
-                g.drawImage(pitImage, myApplet.pitPositions[i].x, myApplet.pitPositions[i].y,Color.gray, null);
+            for (int i=0; i < TankGame.pitPositions.length; i++) {
+                g.drawImage(pitImage, TankGame.pitPositions[i].x, TankGame.pitPositions[i].y,Color.gray, null);
             }
         
             // show the enemies
-            for (int i=0; i < myApplet.enemyPositions.length; i++) {
-                if (myApplet.enemyPositions[i].x > -1) {
+            for (int i=0; i < TankGame.enemyPositions.length; i++) {
+                if (TankGame.enemyPositions[i].x > -1) {
                     int eelem = myApplet.enemyShooting[i] ? myApplet.SHOOTING : myApplet.NOTSHOOTING;
-                    g.drawImage(myApplet.badImages[myApplet.enemyImageNo[i]][eelem], myApplet.enemyPositions[i].x, myApplet.enemyPositions[i].y,null);
+                    g.drawImage(myApplet.badImages[myApplet.enemyImageNo[i]][eelem], TankGame.enemyPositions[i].x, TankGame.enemyPositions[i].y,null);
                 }
             }
             if (myApplet.explosionx != -1) {
