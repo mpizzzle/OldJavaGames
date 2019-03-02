@@ -1,8 +1,6 @@
 //* Copyright (c) Mary Percival 2003                          */
 /* Reaper game                      Created May 2003          */
 
-package  Reaper;
-
 import  java.awt.*;
 import  java.awt.event.*;
 import  java.applet.*;

@@ -1,5 +1,3 @@
-package Reaper;
-
 import java.awt.*;
 
 public class ReaperArea extends Panel {
