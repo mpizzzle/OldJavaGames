@@ -1,10 +1,18 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.io.File;
+import java.io.IOException;
 
-public class ReaperArea extends Panel {
-    
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+public class ReaperArea extends JPanel {
+    private static final long serialVersionUID = 8785700671033447779L;
     static int FLOORLEVEL = 589;
     static final int FLOORWIDTH = 150;
-    static int FLOORDIFF = 605-FLOORLEVEL;
+    static int FLOORDIFF = 605 - FLOORLEVEL;
     ReaperGame myApplet = null;
     Image reaperwarp;
     Image reaper1;
@@ -24,162 +32,174 @@ public class ReaperArea extends Panel {
     Image squishedrunner;
     Image runner, runner2, runnerleft, runner2left;
     Image title[] = new Image[10];
-    MediaTracker mt=null;
+    MediaTracker mt = null;
     boolean showingMessage = false;
-    boolean starting=true;
-    
-    public ReaperArea(ReaperGame parent) {
-        mt=new MediaTracker(parent);
-        myApplet = parent;
-        
-        runner = load(parent,  "run1.gif");
-        runnerleft = load(parent,  "run1left.gif");
-        runner2 = load(parent,  "run2.gif");
-        runner2left = load(parent,  "run2left.gif");
-        
-        squishedrunner = load(parent,  "run1.gif");
-                
-        reaper1 = load(parent,  "grimreaper.gif");
-        reaper1left = load(parent,  "grimreaper.gif");
-        reaper2 = load(parent,  "grimreaper.gif");
-        reaper2left = load(parent,  "grimreaper.gif");
-        reapercrouch = load(parent,  "grimreaper.gif");
-        reapercrouchleft = load(parent,  "grimreaper.gif");
-        reaperjump = load(parent, "grimreaper.gif");
-        reaperjumpleft = load(parent,  "grimreaper.gif");
-        
-        obstacle = load(parent,  "fire hydrant.gif");
-        tallobstacle = load(parent,  "bus.gif");
-        reaperstand = load(parent,  "grimreaper.gif");
-        reaperstandleft = load(parent,  "grimreaper.gif");
-        
-        levelcomplete = load(parent,  "missioncomplete.gif");
-        reaperdead = load(parent,  "reaperdead.gif");
-        reaperwarp = load(parent,  "warp.gif");
+    boolean starting = true;
 
-        title[0] = load(parent,  "g.gif");
-        title[1] = load(parent,  "gr.gif");
-        title[2] = load(parent,  "gri.gif");
-        title[3] = load(parent,  "grim.gif");
-        title[4] = load(parent,  "grimr.gif");
-        title[5] = load(parent,  "grimre.gif");
-        title[6] = load(parent,  "grimrea.gif");
-        title[7] = load(parent,  "grimreap.gif");
-        title[8] = load(parent,  "grimreape.gif");
-        title[9] = load(parent,  "grimreaperwriting.gif");
-        
+    public ReaperArea(ReaperGame parent) {
+        mt = new MediaTracker(parent);
+        myApplet = parent;
+
+        runner = load(parent, "run1.gif");
+        runnerleft = load(parent, "run1left.gif");
+        runner2 = load(parent, "run2.gif");
+        runner2left = load(parent, "run2left.gif");
+
+        squishedrunner = load(parent, "run1.gif");
+
+        reaper1 = load(parent, "grimreaper.gif");
+        reaper1left = load(parent, "grimreaper.gif");
+        reaper2 = load(parent, "grimreaper.gif");
+        reaper2left = load(parent, "grimreaper.gif");
+        reapercrouch = load(parent, "grimreaper.gif");
+        reapercrouchleft = load(parent, "grimreaper.gif");
+        reaperjump = load(parent, "grimreaper.gif");
+        reaperjumpleft = load(parent, "grimreaper.gif");
+
+        obstacle = load(parent, "fire hydrant.gif");
+        tallobstacle = load(parent, "bus.gif");
+        reaperstand = load(parent, "grimreaper.gif");
+        reaperstandleft = load(parent, "grimreaper.gif");
+
+        levelcomplete = load(parent, "missioncomplete.gif");
+        reaperdead = load(parent, "reaperdead.gif");
+        reaperwarp = load(parent, "warp.gif");
+
+        title[0] = load(parent, "g.gif");
+        title[1] = load(parent, "gr.gif");
+        title[2] = load(parent, "gri.gif");
+        title[3] = load(parent, "grim.gif");
+        title[4] = load(parent, "grimr.gif");
+        title[5] = load(parent, "grimre.gif");
+        title[6] = load(parent, "grimrea.gif");
+        title[7] = load(parent, "grimreap.gif");
+        title[8] = load(parent, "grimreape.gif");
+        title[9] = load(parent, "grimreaperwriting.gif");
+
     }
-    
+
     Image load(ReaperGame parent, String picture) {
-        Image im    = parent.getImage(myApplet.getCodeBase(), "Reaper\\" + picture);
-        checkImage(im, picture);
-        return(im);
+        try {
+            Image im = ImageIO.read(new File("../Assets/" + picture));
+            checkImage(im, picture);
+            return (im);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
-    
+
     void checkImage(Image image, String name) {
         if (mt != null) {
-            mt.addImage(image,0);
+            mt.addImage(image, 0);
             try {
-                mt.waitForID(0,5000);
-            }
-            catch (InterruptedException ie) {
+                mt.waitForID(0, 5000);
+            } catch (InterruptedException ie) {
                 // nothing to do
             }
-            if (mt.isErrorID(0)) System.out.println("Image Not found: "+name.toString());
+            if (mt.isErrorID(0))
+                System.out.println("Image Not found: " + name.toString());
         }
     }
-    
-    public synchronized void paint (Graphics g) {
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Image obstacleimage, preyimage;
-        if (myApplet == null) return;
+        if (myApplet == null)
+            return;
         final int w = getBounds().width;
-        final int h = getBounds().height;
         g.setColor(Color.white);
         g.fillRect(0, 0, w, FLOORLEVEL); // don't white wash the floor!
-        FontMetrics fm = getFontMetrics(getFont());
-        
         g.setColor(Color.black);
-        int asc = fm.getAscent() + 4;
 
         // paint the floor
-        if (myApplet.floors[myApplet.level-1] != null) {
-            for (int pos=0; pos < w; pos+=FLOORWIDTH) {
-                g.drawImage(myApplet.floors[myApplet.level-1],pos, FLOORLEVEL,Color.black, null);
+        if (ReaperGame.floors[ReaperGame.level - 1] != null) {
+            for (int pos = 0; pos < w; pos += FLOORWIDTH) {
+                g.drawImage(ReaperGame.floors[ReaperGame.level - 1], pos, FLOORLEVEL, Color.black, null);
             }
         }
-        if (!myApplet.juststarted) {
-            if (myApplet.obstaclePositions != null)  {
+        if (!ReaperGame.juststarted) {
+            if (ReaperGame.obstaclePositions != null) {
                 myApplet.changePageIfNecessary();
-                // show the obstacles from right to left (because obstacles have white space to their left but not their right)
-                for (int i=myApplet.obstacleNumber-1; i >= 0; i--) {
+                // show the obstacles from right to left (because obstacles have white space to
+                // their left but not their right)
+                for (int i = ReaperGame.obstacleNumber - 1; i >= 0; i--) {
                     obstacleimage = myApplet.getObstacleImage(i);
-                    if (myApplet.isTall[i]) obstacleimage = tallobstacle; // only one image for this for now
-                    g.drawImage(obstacleimage, myApplet.obstaclePositions[i].x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.obstaclePositions[i].y,Color.white, null);
+                    if (ReaperGame.isTall[i])
+                        obstacleimage = tallobstacle; // only one image for this for now
+                    g.drawImage(obstacleimage,
+                            ReaperGame.obstaclePositions[i].x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
+                            ReaperGame.obstaclePositions[i].y, Color.white, null);
                 }
             }
 
             // show the prey
-            if (myApplet.preyPositions != null)  {
-                for (int i=0; i < myApplet.preyNumber; i++) {
-                    //if (!myApplet.preyDead[i]) {
-                        preyimage = myApplet.getEnemyImage(i);
-                        g.drawImage(preyimage, myApplet.preyPositions[i].x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.preyPositions[i].y,null);
-                    //}
+            if (ReaperGame.preyPositions != null) {
+                for (int i = 0; i < ReaperGame.preyNumber; i++) {
+                    // if (!myApplet.preyDead[i]) {
+                    preyimage = myApplet.getEnemyImage(i);
+                    g.drawImage(preyimage, ReaperGame.preyPositions[i].x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
+                            ReaperGame.preyPositions[i].y, null);
+                    // }
                 }
             }
 
-            // draw Hero (on top  of preceding images)
-            if (myApplet.playerPosition != null) {
+            // draw Hero (on top of preceding images)
+            if (ReaperGame.playerPosition != null) {
                 // show the player
                 Image reapersimage = myApplet.getHeroImage();
-                if (myApplet.reapercrouching) { 
-                    if (myApplet.reaperleft) 
+                if (ReaperGame.reapercrouching) {
+                    if (ReaperGame.reaperleft)
                         reapersimage = reapercrouchleft;
-                    else 
+                    else
                         reapersimage = reapercrouch;
                 }
-                if (myApplet.jumping) { 
-                    if (myApplet.reaperleft) 
+                if (ReaperGame.jumping) {
+                    if (ReaperGame.reaperleft)
                         reapersimage = reaperjumpleft;
-                    else 
+                    else
                         reapersimage = reaperjump;
                 }
-                g.drawImage(reapersimage, myApplet.playerPosition.x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.playerPosition.y,/*Color.white,*/ null);
+                g.drawImage(reapersimage, ReaperGame.playerPosition.x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
+                        ReaperGame.playerPosition.y, /* Color.white, */ null);
             }
         }
-        
+
         // draw warp image (on top of Hero)
-        if (myApplet.warpzone != null) {
+        if (ReaperGame.warpzone != null) {
             // show the warp zone at the end of the level
-            g.drawImage(reaperwarp, myApplet.warpzone.x-(myApplet.page*myApplet.PAGEWIDTH), myApplet.warpzone.y,Color.white, null);
+            g.drawImage(reaperwarp, ReaperGame.warpzone.x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
+                    ReaperGame.warpzone.y, Color.white, null);
         }
-        
-        if (myApplet.ingame == false && !myApplet.juststarted) {
-            if (myApplet.dead) {
+
+        if (ReaperGame.ingame == false && !ReaperGame.juststarted) {
+            if (ReaperGame.dead) {
                 // Reaper is dead (?!)
-                g.drawImage(reaperdead, myApplet.getBounds().width/2, getBounds().height/2,Color.white, null);
-            }
-            else {
+                g.drawImage(reaperdead, myApplet.getBounds().width / 2, getBounds().height / 2, Color.white, null);
+            } else {
                 // level complete
-                g.drawImage(levelcomplete, myApplet.getBounds().width/2, getBounds().height/2,Color.white, null);
+                g.drawImage(levelcomplete, myApplet.getBounds().width / 2, getBounds().height / 2, Color.white, null);
             }
-            showingMessage=true;
-        }
-        else
+            showingMessage = true;
+        } else
             showingMessage = false;
-    if (starting) {
-        showTitle(g);
-        starting=false;
+        if (starting) {
+            showTitle(g);
+            starting = false;
+        }
+
+        myApplet.setSomethingChangedSinceRepaint(false);
     }
-    
-    myApplet.setSomethingChangedSinceRepaint(false);
-    }
-    
+
     public void showTitle(Graphics g) {
         for (int i = 0; i < 10; i++) {
-            g.drawImage(title[i], myApplet.getBounds().width/2, getBounds().height/2,Color.white, null);
-            try {Thread.sleep(50);}
-            catch (Exception e) {}
+            g.drawImage(title[i], myApplet.getBounds().width / 2, getBounds().height / 2, Color.white, null);
+            try {
+                Thread.sleep(50);
+            } catch (Exception e) {
+            }
         }
     }
 }
