@@ -1,6 +1,3 @@
-package Easter;
-
-
 public class Easter
 {
     private static String USER1 = "Michael";
