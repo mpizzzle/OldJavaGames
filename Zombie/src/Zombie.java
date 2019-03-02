@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-public class ZombieGame extends JFrame implements KeyListener, Runnable {
+public class Zombie extends JFrame implements KeyListener, Runnable {
     private static final long serialVersionUID = 8654912377879331966L;
     // all member variables 'static' because shared with the zombie action thread
     private static ZombieArea area;
@@ -37,26 +37,26 @@ public class ZombieGame extends JFrame implements KeyListener, Runnable {
     protected int explosionx = -1, explosiony = -1;
 
     public static void main(String[] args) {
-        ZombieGame zombieGame = new ZombieGame();
-        zombieGame.setLayout(null);
-        zombieGame.setBackground(Color.gray);
-	zombieGame.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Zombie Zombie = new Zombie();
+        Zombie.setLayout(null);
+        Zombie.setBackground(Color.gray);
+	Zombie.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new ZombieArea(zombieGame);
-        zombieGame.add(area);
+        area = new ZombieArea(Zombie);
+        Zombie.add(area);
         // RIGHTEDGE = getBounds().width - 1;
         // BOTTOMEDGE = getBounds().height - 1;
         XAMOUNT = 12;
         YAMOUNT = 12;
-        zombieGame.setVisible(true);
+        Zombie.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        zombieGame.addKeyListener(zombieGame);
-        area.addKeyListener(zombieGame);
+        Zombie.addKeyListener(Zombie);
+        area.addKeyListener(Zombie);
         area.requestFocus();
 
-        zombies = new Thread(zombieGame);
+        zombies = new Thread(Zombie);
         zombies.start();
     }
 

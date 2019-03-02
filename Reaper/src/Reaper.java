@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 //* Copyright (c) Mary Percival 2003                          */
 /* Reaper game                      Created May 2003          */
 
-public class ReaperGame extends JFrame implements KeyListener, Runnable {
+public class Reaper extends JFrame implements KeyListener, Runnable {
     private static final long serialVersionUID = -3998951090286400255L;
     boolean easymode = true;
     static int MAXLEVEL = 1;
@@ -125,25 +125,25 @@ public class ReaperGame extends JFrame implements KeyListener, Runnable {
 
     // *************************************************************
     public static void main(String[] args) {
-        ReaperGame reaperGame = new ReaperGame();
+        Reaper Reaper = new Reaper();
 
-        reaperGame.setLayout(null);
-        reaperGame.setBackground(Color.white);
-        reaperGame.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Reaper.setLayout(null);
+        Reaper.setBackground(Color.white);
+        Reaper.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new ReaperArea(reaperGame);
-        reaperGame.add(area);
-        //RIGHTEDGE = (reaperGame.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
-        //BOTTOMEDGE = reaperGame.getBounds().height - 1;
-        reaperGame.setVisible(true);
+        area = new ReaperArea(Reaper);
+        Reaper.add(area);
+        //RIGHTEDGE = (Reaper.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
+        //BOTTOMEDGE = Reaper.getBounds().height - 1;
+        Reaper.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
-        //GROUNDLEVEL = reaperGame.getBounds().height - reaperGame.GROUNDDIFF;
+        //GROUNDLEVEL = Reaper.getBounds().height - Reaper.GROUNDDIFF;
         startPosY = GROUNDLEVEL;
-        //ReaperArea.FLOORLEVEL = reaperGame.getBounds().height - ReaperArea.FLOORDIFF;
+        //ReaperArea.FLOORLEVEL = Reaper.getBounds().height - ReaperArea.FLOORDIFF;
         area.setVisible(true);
 
-        reaperGame.addKeyListener(reaperGame);
-        area.addKeyListener(reaperGame);
+        Reaper.addKeyListener(Reaper);
+        area.addKeyListener(Reaper);
         area.requestFocus();
 
         for (int i = 0; i < OBSTACLEIMAGES; i++) {
@@ -163,7 +163,7 @@ public class ReaperGame extends JFrame implements KeyListener, Runnable {
         // floors[i] = area.floor4;
         // }
 
-        timer = new Thread(reaperGame);
+        timer = new Thread(Reaper);
         timer.start();
 
     }

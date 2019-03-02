@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 /* Copyright (c) Mary Percival 2003                          */
 /* Link game                      Created May 2003          */
 
-public class LinkGame extends JFrame implements KeyListener, Runnable {
+public class Link extends JFrame implements KeyListener, Runnable {
     private static final long serialVersionUID = 136423218680421502L;
     // all member variables 'static' because shared with the enemy action thread
     static LinkArea area;
@@ -75,31 +75,31 @@ public class LinkGame extends JFrame implements KeyListener, Runnable {
     static int startPosY = GROUNDLEVEL;
 
     public static void main(String[] args) {
-        LinkGame linkGame = new LinkGame();
+        Link Link = new Link();
 
-        linkGame.setLayout(null);
-        linkGame.setBackground(Color.white);
-        linkGame.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Link.setLayout(null);
+        Link.setBackground(Color.white);
+        Link.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new LinkArea(linkGame);
-        linkGame.add(area);
+        area = new LinkArea(Link);
+        Link.add(area);
         XAMOUNT = 12;
         YAMOUNT = 12;
-        //RIGHTEDGE = (linkGame.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
-        //BOTTOMEDGE = linkGame.getBounds().height - 1;
-        linkGame.setVisible(true);
-        //area.setBounds(0, 0, linkGame.getBounds().width, BOTTOMEDGE);
+        //RIGHTEDGE = (Link.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
+        //BOTTOMEDGE = Link.getBounds().height - 1;
+        Link.setVisible(true);
+        //area.setBounds(0, 0, Link.getBounds().width, BOTTOMEDGE);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        linkGame.addKeyListener(linkGame);
-        area.addKeyListener(linkGame);
+        Link.addKeyListener(Link);
+        area.addKeyListener(Link);
         area.requestFocus();
 
         levellengths[0] = RIGHTEDGE;
         obstacleImages[0] = area.obstacle;
 
-        timer = new Thread(linkGame);
+        timer = new Thread(Link);
         timer.start();
     }
 
@@ -501,11 +501,11 @@ public class LinkGame extends JFrame implements KeyListener, Runnable {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        boolean needrepaint = false;
+        // boolean needrepaint = false;
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             herocrouching = false;
             decKeysDown(DOWNDOWN);
-            needrepaint = true;
+            // needrepaint = true;
         }
         /*
          * else if (e.getKeyCode() == KeyEvent.VK_SPACE) { decKeysDown(SPACEDOWN); }

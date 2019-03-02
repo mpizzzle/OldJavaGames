@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-public class MarioGame extends JFrame implements KeyListener, Runnable {
+public class Mario extends JFrame implements KeyListener, Runnable {
     private static final long serialVersionUID = 7030451342808203557L;
     boolean easymode = true;
     static int MAXLEVEL = 9;
@@ -163,24 +163,24 @@ public class MarioGame extends JFrame implements KeyListener, Runnable {
 
     // *************************************************************
     public static void main(String[] args) {
-        MarioGame marioGame = new MarioGame();
-        marioGame.setLayout(null);
-        marioGame.setBackground(Color.white);
-        marioGame.setSize(RIGHTEDGE, BOTTOMEDGE);
-        area = new MarioArea(marioGame);
-        marioGame.add(area);
-        //RIGHTEDGE = (marioGame.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
-        //BOTTOMEDGE = marioGame.getBounds().height - 1;
-        marioGame.setVisible(true);
+        Mario Mario = new Mario();
+        Mario.setLayout(null);
+        Mario.setBackground(Color.white);
+        Mario.setSize(RIGHTEDGE, BOTTOMEDGE);
+        area = new MarioArea(Mario);
+        Mario.add(area);
+        //RIGHTEDGE = (Mario.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
+        //BOTTOMEDGE = Mario.getBounds().height - 1;
+        Mario.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
-        //GROUNDLEVEL = marioGame.getBounds().height - GROUNDDIFF;
+        //GROUNDLEVEL = Mario.getBounds().height - GROUNDDIFF;
         //GROUNDLEVEL = BOTTOMEDGE;// - GROUNDDIFF;
         startPosY = GROUNDLEVEL;
-        //MarioArea.FLOORLEVEL = marioGame.getBounds().height - MarioArea.FLOORDIFF;
+        //MarioArea.FLOORLEVEL = Mario.getBounds().height - MarioArea.FLOORDIFF;
         area.setVisible(true);
 
-        marioGame.addKeyListener(marioGame);
-        area.addKeyListener(marioGame);
+        Mario.addKeyListener(Mario);
+        area.addKeyListener(Mario);
         area.requestFocus();
 
         obstacleImages[0] = area.obstacle;
@@ -342,7 +342,7 @@ public class MarioGame extends JFrame implements KeyListener, Runnable {
         floors[7] = area.floor6;
         floors[8] = area.Floor10;
 
-        timer = new Thread(marioGame);
+        timer = new Thread(Mario);
         timer.start();
 
     }

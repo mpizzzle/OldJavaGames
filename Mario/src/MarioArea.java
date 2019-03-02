@@ -15,7 +15,7 @@ public class MarioArea extends JPanel implements ActionListener {
     static int FLOORLEVEL = 589;
     static final int FLOORWIDTH = 150;
     static int FLOORDIFF = 605 - FLOORLEVEL;
-    MarioGame myApplet = null;
+    Mario myApplet = null;
     Image mariotitle;
     Image icefloor;
     Image floor2;
@@ -109,7 +109,7 @@ public class MarioArea extends JPanel implements ActionListener {
     MediaTracker mt = null;
     boolean showingMessage = false;
 
-    public MarioArea(MarioGame parent) {
+    public MarioArea(Mario parent) {
         mt = new MediaTracker(parent);
         myApplet = parent;
         upmushroom = load(parent, "1up!mushroom.gif");
@@ -210,7 +210,7 @@ public class MarioArea extends JPanel implements ActionListener {
         Floor10 = load(parent, "mariofloor10.gif");
     }
 
-    Image load(MarioGame parent, String picture) {
+    Image load(Mario parent, String picture) {
         try {
             Image im = ImageIO.read(new File("../Assets/" + picture));
             checkImage(im, picture);
@@ -249,67 +249,67 @@ public class MarioArea extends JPanel implements ActionListener {
         g.setColor(Color.black);
 
         // paint the floor
-        if (MarioGame.floors[MarioGame.level - 1] != null) {
+        if (Mario.floors[Mario.level - 1] != null) {
             for (int pos = 0; pos < w; pos += FLOORWIDTH) {
-                g.drawImage(MarioGame.floors[MarioGame.level - 1], pos, FLOORLEVEL, Color.black, null);
+                g.drawImage(Mario.floors[Mario.level - 1], pos, FLOORLEVEL, Color.black, null);
             }
         }
-        if (!MarioGame.juststarted) {
-            if (MarioGame.obstaclePositions != null) {
+        if (!Mario.juststarted) {
+            if (Mario.obstaclePositions != null) {
                 myApplet.changePageIfNecessary();
                 // show the obstacles from right to left (because pipes have white space to
                 // their left but not their right)
-                for (int i = MarioGame.obstacleNumber - 1; i >= 0; i--) {
+                for (int i = Mario.obstacleNumber - 1; i >= 0; i--) {
                     obstacleimage = myApplet.getObstacleImage(i);
-                    if (MarioGame.isTall[i])
+                    if (Mario.isTall[i])
                         obstacleimage = tallobstacle; // only one image for this for now
                     g.drawImage(obstacleimage,
-                            MarioGame.obstaclePositions[i].x - (MarioGame.page * MarioGame.PAGEWIDTH),
-                            MarioGame.obstaclePositions[i].y, Color.white, null);
+                            Mario.obstaclePositions[i].x - (Mario.page * Mario.PAGEWIDTH),
+                            Mario.obstaclePositions[i].y, Color.white, null);
                 }
             }
 
             // show the enemies
-            if (MarioGame.enemyPositions != null) {
-                for (int i = 0; i < MarioGame.enemyNumber; i++) {
+            if (Mario.enemyPositions != null) {
+                for (int i = 0; i < Mario.enemyNumber; i++) {
                     // if (!myApplet.enemyDead[i]) {
                     enemyimage = myApplet.getEnemyImage(i);
-                    g.drawImage(enemyimage, MarioGame.enemyPositions[i].x - (MarioGame.page * MarioGame.PAGEWIDTH),
-                            MarioGame.enemyPositions[i].y, null);
+                    g.drawImage(enemyimage, Mario.enemyPositions[i].x - (Mario.page * Mario.PAGEWIDTH),
+                            Mario.enemyPositions[i].y, null);
                     // }
                 }
             }
 
             // draw Hero (on top of preceding images)
-            if (MarioGame.playerPosition != null) {
+            if (Mario.playerPosition != null) {
                 // show the player
                 Image herosimage = myApplet.getHeroImage();
-                if (MarioGame.herocrouching) {
-                    if (MarioGame.heroleft)
+                if (Mario.herocrouching) {
+                    if (Mario.heroleft)
                         herosimage = herocrouchleft;
                     else
                         herosimage = herocrouch;
                 }
-                if (MarioGame.jumping) {
-                    if (MarioGame.heroleft)
+                if (Mario.jumping) {
+                    if (Mario.heroleft)
                         herosimage = herojumpleft;
                     else
                         herosimage = herojump;
                 }
-                g.drawImage(herosimage, MarioGame.playerPosition.x - (MarioGame.page * MarioGame.PAGEWIDTH),
-                        MarioGame.playerPosition.y, /* Color.white, */ null);
+                g.drawImage(herosimage, Mario.playerPosition.x - (Mario.page * Mario.PAGEWIDTH),
+                        Mario.playerPosition.y, /* Color.white, */ null);
             }
         }
 
         // draw warp image (on top of Hero)
-        if (MarioGame.warpzone != null) {
+        if (Mario.warpzone != null) {
             // show the warp zone at the end of the level
-            g.drawImage(herowarp, MarioGame.warpzone.x - (MarioGame.page * MarioGame.PAGEWIDTH), MarioGame.warpzone.y,
+            g.drawImage(herowarp, Mario.warpzone.x - (Mario.page * Mario.PAGEWIDTH), Mario.warpzone.y,
                     Color.white, null);
         }
 
-        if (MarioGame.ingame == false && !MarioGame.juststarted) {
-            if (MarioGame.dead) {
+        if (Mario.ingame == false && !Mario.juststarted) {
+            if (Mario.dead) {
                 // Hero is dead
                 g.drawImage(herodead, myApplet.getBounds().width / 2, getBounds().height / 2, Color.white, null);
             } else {

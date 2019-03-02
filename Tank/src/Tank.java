@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 /* Copyright (c) Mary Percival 2002                          */
 /* Tank game                      Created October 2002     */
 
-public class TankGame extends JFrame implements KeyListener, Runnable {
+public class Tank extends JFrame implements KeyListener, Runnable {
     private static final long serialVersionUID = 2750159877444817519L;
     // all member variables 'static' because shared with the enemy action thread
     private static TankArea area;
@@ -51,66 +51,66 @@ public class TankGame extends JFrame implements KeyListener, Runnable {
     Image[][] badImages = new Image[8][2]; // up up2 down down2 left left2 right right2 x SHOOTING and NON_SHOOTING
 
     public static void main(String[] args) {
-        TankGame tankGame = new TankGame();
-        tankGame.setLayout(null);
-        tankGame.setBackground(Color.gray);
-        tankGame.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Tank Tank = new Tank();
+        Tank.setLayout(null);
+        Tank.setBackground(Color.gray);
+        Tank.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new TankArea(tankGame);
-        tankGame.add(area);
-        //RIGHTEDGE = tankGame.getBounds().width - 1;
-        //BOTTOMEDGE = tankGame.getBounds().height - 1;
+        area = new TankArea(Tank);
+        Tank.add(area);
+        //RIGHTEDGE = Tank.getBounds().width - 1;
+        //BOTTOMEDGE = Tank.getBounds().height - 1;
         XAMOUNT = 12;
         YAMOUNT = 12;
-        tankGame.setVisible(true);
+        Tank.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        tankGame.addKeyListener(tankGame);
-        area.addKeyListener(tankGame);
+        Tank.addKeyListener(Tank);
+        area.addKeyListener(Tank);
         area.requestFocus();
 
-        tankGame.goodImages[FIRSTUP][NOTSHOOTING] = area.tankup;
-        tankGame.goodImages[FIRSTUP + 1][NOTSHOOTING] = area.tankup2;
-        tankGame.goodImages[FIRSTUP][SHOOTING] = area.tankupshoot;
-        tankGame.goodImages[FIRSTUP + 1][SHOOTING] = area.tankupshoot2;
+        Tank.goodImages[FIRSTUP][NOTSHOOTING] = area.tankup;
+        Tank.goodImages[FIRSTUP + 1][NOTSHOOTING] = area.tankup2;
+        Tank.goodImages[FIRSTUP][SHOOTING] = area.tankupshoot;
+        Tank.goodImages[FIRSTUP + 1][SHOOTING] = area.tankupshoot2;
 
-        tankGame.goodImages[FIRSTDOWN][NOTSHOOTING] = area.tankdown;
-        tankGame.goodImages[FIRSTDOWN + 1][NOTSHOOTING] = area.tankdown2;
-        tankGame.goodImages[FIRSTDOWN][SHOOTING] = area.tankdownshoot;
-        tankGame.goodImages[FIRSTDOWN + 1][SHOOTING] = area.tankdownshoot2;
+        Tank.goodImages[FIRSTDOWN][NOTSHOOTING] = area.tankdown;
+        Tank.goodImages[FIRSTDOWN + 1][NOTSHOOTING] = area.tankdown2;
+        Tank.goodImages[FIRSTDOWN][SHOOTING] = area.tankdownshoot;
+        Tank.goodImages[FIRSTDOWN + 1][SHOOTING] = area.tankdownshoot2;
 
-        tankGame.goodImages[FIRSTLEFT][NOTSHOOTING] = area.tankleft;
-        tankGame.goodImages[FIRSTLEFT + 1][NOTSHOOTING] = area.tankleft2;
-        tankGame.goodImages[FIRSTLEFT][SHOOTING] = area.tankleftshoot;
-        tankGame.goodImages[FIRSTLEFT + 1][SHOOTING] = area.tankleftshoot2;
+        Tank.goodImages[FIRSTLEFT][NOTSHOOTING] = area.tankleft;
+        Tank.goodImages[FIRSTLEFT + 1][NOTSHOOTING] = area.tankleft2;
+        Tank.goodImages[FIRSTLEFT][SHOOTING] = area.tankleftshoot;
+        Tank.goodImages[FIRSTLEFT + 1][SHOOTING] = area.tankleftshoot2;
         
-        tankGame.goodImages[FIRSTRIGHT][NOTSHOOTING] = area.tankright;
-        tankGame.goodImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.tankright2;
-        tankGame.goodImages[FIRSTRIGHT][SHOOTING] = area.tankrightshoot;
-        tankGame.goodImages[FIRSTRIGHT + 1][SHOOTING] = area.tankrightshoot2;
+        Tank.goodImages[FIRSTRIGHT][NOTSHOOTING] = area.tankright;
+        Tank.goodImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.tankright2;
+        Tank.goodImages[FIRSTRIGHT][SHOOTING] = area.tankrightshoot;
+        Tank.goodImages[FIRSTRIGHT + 1][SHOOTING] = area.tankrightshoot2;
 
-        tankGame.badImages[FIRSTUP][NOTSHOOTING] = area.badtankup;
-        tankGame.badImages[FIRSTUP + 1][NOTSHOOTING] = area.badtankup2;
-        tankGame.badImages[FIRSTUP][SHOOTING] = area.badtankupshoot;
-        tankGame.badImages[FIRSTUP + 1][SHOOTING] = area.badtankupshoot2;
+        Tank.badImages[FIRSTUP][NOTSHOOTING] = area.badtankup;
+        Tank.badImages[FIRSTUP + 1][NOTSHOOTING] = area.badtankup2;
+        Tank.badImages[FIRSTUP][SHOOTING] = area.badtankupshoot;
+        Tank.badImages[FIRSTUP + 1][SHOOTING] = area.badtankupshoot2;
 
-        tankGame.badImages[FIRSTDOWN][NOTSHOOTING] = area.badtankdown;
-        tankGame.badImages[FIRSTDOWN + 1][NOTSHOOTING] = area.badtankdown2;
-        tankGame.badImages[FIRSTDOWN][SHOOTING] = area.badtankdownshoot;
-        tankGame.badImages[FIRSTDOWN + 1][SHOOTING] = area.badtankdownshoot2;
+        Tank.badImages[FIRSTDOWN][NOTSHOOTING] = area.badtankdown;
+        Tank.badImages[FIRSTDOWN + 1][NOTSHOOTING] = area.badtankdown2;
+        Tank.badImages[FIRSTDOWN][SHOOTING] = area.badtankdownshoot;
+        Tank.badImages[FIRSTDOWN + 1][SHOOTING] = area.badtankdownshoot2;
 
-        tankGame.badImages[FIRSTLEFT][NOTSHOOTING] = area.badtankleft;
-        tankGame.badImages[FIRSTLEFT + 1][NOTSHOOTING] = area.badtankleft2;
-        tankGame.badImages[FIRSTLEFT][SHOOTING] = area.badtankleftshoot;
-        tankGame.badImages[FIRSTLEFT + 1][SHOOTING] = area.badtankleftshoot2;
+        Tank.badImages[FIRSTLEFT][NOTSHOOTING] = area.badtankleft;
+        Tank.badImages[FIRSTLEFT + 1][NOTSHOOTING] = area.badtankleft2;
+        Tank.badImages[FIRSTLEFT][SHOOTING] = area.badtankleftshoot;
+        Tank.badImages[FIRSTLEFT + 1][SHOOTING] = area.badtankleftshoot2;
 
-        tankGame.badImages[FIRSTRIGHT][NOTSHOOTING] = area.badtankright;
-        tankGame.badImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.badtankright2;
-        tankGame.badImages[FIRSTRIGHT][SHOOTING] = area.badtankrightshoot;
-        tankGame.badImages[FIRSTRIGHT + 1][SHOOTING] = area.badtankrightshoot2;
+        Tank.badImages[FIRSTRIGHT][NOTSHOOTING] = area.badtankright;
+        Tank.badImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.badtankright2;
+        Tank.badImages[FIRSTRIGHT][SHOOTING] = area.badtankrightshoot;
+        Tank.badImages[FIRSTRIGHT + 1][SHOOTING] = area.badtankrightshoot2;
 
-        enemies = new Thread(tankGame);
+        enemies = new Thread(Tank);
         enemies.start();
     }
 

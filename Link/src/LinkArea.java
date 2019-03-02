@@ -12,7 +12,7 @@ public class LinkArea extends JPanel {
     private static final long serialVersionUID = 635033554190094921L;
     static final int FLOORLEVEL = 587;
     static final int FLOORWIDTH = 150;
-    LinkGame myApplet = null;
+    Link myApplet = null;
     Image yellowgem;
     Image spider;
     Image obstacle;
@@ -38,7 +38,7 @@ public class LinkArea extends JPanel {
     Image blob;
     MediaTracker mt = null;
 
-    public LinkArea(LinkGame parent) {
+    public LinkArea(Link parent) {
         mt = new MediaTracker(parent);
         myApplet = parent;
         yellowgem = load(myApplet, "yellowgem.gif");
@@ -79,7 +79,7 @@ public class LinkArea extends JPanel {
         }
     }
 
-    Image load(LinkGame parent, String picture) {
+    Image load(Link parent, String picture) {
         try {
             Image im = ImageIO.read(new File("../Assets/" + picture));
             checkImage(im, picture);
@@ -107,12 +107,12 @@ public class LinkArea extends JPanel {
          * g.drawImage(floor,pos, FLOORLEVEL,Color.black, null); }
          */
 
-        if (LinkGame.obstaclePositions != null) {
+        if (Link.obstaclePositions != null) {
             // show the obstacles
-            for (int i = 0; i < LinkGame.obstaclePositions.length; i++) {
+            for (int i = 0; i < Link.obstaclePositions.length; i++) {
                 obstacleimage = myApplet.getObstacleImage(i);
-                g.drawImage(obstacleimage, LinkGame.obstaclePositions[LinkGame.level - 1][i].x,
-                        LinkGame.obstaclePositions[LinkGame.level - 1][i].y - 4, Color.white, null);
+                g.drawImage(obstacleimage, Link.obstaclePositions[Link.level - 1][i].x,
+                        Link.obstaclePositions[Link.level - 1][i].y - 4, Color.white, null);
             }
         }
 
@@ -122,7 +122,7 @@ public class LinkArea extends JPanel {
          * myApplet.enemyPositions[i].x, myApplet.enemyPositions[i].y,null); } }
          */
         // draw Hero (on top of preceding images)
-        if (LinkGame.playerPosition != null) {
+        if (Link.playerPosition != null) {
             // show the player
             Image herosimage = myApplet.getHeroImage();
             /*
@@ -130,7 +130,7 @@ public class LinkArea extends JPanel {
              * herocrouchleft; else herosimage = herocrouch; } if (myApplet.jumping) { if
              * (myApplet.heroleft) herosimage = herojumpleft; else herosimage = herojump; }
              */
-            g.drawImage(herosimage, LinkGame.playerPosition.x, LinkGame.playerPosition.y, /* Color.white, */ null);
+            g.drawImage(herosimage, Link.playerPosition.x, Link.playerPosition.y, /* Color.white, */ null);
         }
         /*
          * // draw warp image (on top of Hero) if (myApplet.warpzone != null) { // show

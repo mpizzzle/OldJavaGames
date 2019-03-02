@@ -13,12 +13,12 @@ import javax.swing.JPanel;
 
 public class PongArea extends JPanel implements ActionListener {
     private static final long serialVersionUID = -842988339431434549L;
-    PongGame myApplet = null;
+    Pong myApplet = null;
     Image paddle;
     Color[] colours = new Color[] { Color.white, Color.blue, Color.green, Color.red, Color.yellow };
     int colourno = 0;
 
-    public PongArea(PongGame parent) {
+    public PongArea(Pong parent) {
         myApplet = parent;
         try {
             paddle = ImageIO.read(new File("../Assets/paddle.gif"));
@@ -40,22 +40,22 @@ public class PongArea extends JPanel implements ActionListener {
         g.fillRect(0, 0, w, h);
         g.setColor(Color.black);
 
-        if (PongGame.playerPosition != null) {
+        if (Pong.playerPosition != null) {
             // show the player's paddle
             // g.drawString("|", myApplet.playerPosition.x, myApplet.playerPosition.y);
-            g.drawImage(paddle, PongGame.playerPosition.x, PongGame.playerPosition.y, Color.black, null);
+            g.drawImage(paddle, Pong.playerPosition.x, Pong.playerPosition.y, Color.black, null);
 
             // show the ball
             colourno = 0;// <-------remove this for confusion mode!
-            for (int i = 0; i < PongGame.ballPositions.length; i++) {
-                if (PongGame.ballPositions[i].x > -1)
+            for (int i = 0; i < Pong.ballPositions.length; i++) {
+                if (Pong.ballPositions[i].x > -1)
                     // g.drawImage(pongImage, myApplet.ballPositions[i].x,
                     // myApplet.ballPositions[i].y,null);
                     g.setColor(colours[colourno++]);
                 if (colourno >= colours.length)
                     colourno = 0;
 
-                g.drawString("O", PongGame.ballPositions[i].x, PongGame.ballPositions[i].y);
+                g.drawString("O", Pong.ballPositions[i].x, Pong.ballPositions[i].y);
             }
         }
     }

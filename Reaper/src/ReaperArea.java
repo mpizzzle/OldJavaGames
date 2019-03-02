@@ -13,7 +13,7 @@ public class ReaperArea extends JPanel {
     static int FLOORLEVEL = 589;
     static final int FLOORWIDTH = 150;
     static int FLOORDIFF = 605 - FLOORLEVEL;
-    ReaperGame myApplet = null;
+    Reaper myApplet = null;
     Image reaperwarp;
     Image reaper1;
     Image reaper1left;
@@ -36,7 +36,7 @@ public class ReaperArea extends JPanel {
     boolean showingMessage = false;
     boolean starting = true;
 
-    public ReaperArea(ReaperGame parent) {
+    public ReaperArea(Reaper parent) {
         mt = new MediaTracker(parent);
         myApplet = parent;
 
@@ -78,7 +78,7 @@ public class ReaperArea extends JPanel {
 
     }
 
-    Image load(ReaperGame parent, String picture) {
+    Image load(Reaper parent, String picture) {
         try {
             Image im = ImageIO.read(new File("../Assets/" + picture));
             checkImage(im, picture);
@@ -115,67 +115,67 @@ public class ReaperArea extends JPanel {
         g.setColor(Color.black);
 
         // paint the floor
-        if (ReaperGame.floors[ReaperGame.level - 1] != null) {
+        if (Reaper.floors[Reaper.level - 1] != null) {
             for (int pos = 0; pos < w; pos += FLOORWIDTH) {
-                g.drawImage(ReaperGame.floors[ReaperGame.level - 1], pos, FLOORLEVEL, Color.black, null);
+                g.drawImage(Reaper.floors[Reaper.level - 1], pos, FLOORLEVEL, Color.black, null);
             }
         }
-        if (!ReaperGame.juststarted) {
-            if (ReaperGame.obstaclePositions != null) {
+        if (!Reaper.juststarted) {
+            if (Reaper.obstaclePositions != null) {
                 myApplet.changePageIfNecessary();
                 // show the obstacles from right to left (because obstacles have white space to
                 // their left but not their right)
-                for (int i = ReaperGame.obstacleNumber - 1; i >= 0; i--) {
+                for (int i = Reaper.obstacleNumber - 1; i >= 0; i--) {
                     obstacleimage = myApplet.getObstacleImage(i);
-                    if (ReaperGame.isTall[i])
+                    if (Reaper.isTall[i])
                         obstacleimage = tallobstacle; // only one image for this for now
                     g.drawImage(obstacleimage,
-                            ReaperGame.obstaclePositions[i].x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
-                            ReaperGame.obstaclePositions[i].y, Color.white, null);
+                            Reaper.obstaclePositions[i].x - (Reaper.page * Reaper.PAGEWIDTH),
+                            Reaper.obstaclePositions[i].y, Color.white, null);
                 }
             }
 
             // show the prey
-            if (ReaperGame.preyPositions != null) {
-                for (int i = 0; i < ReaperGame.preyNumber; i++) {
+            if (Reaper.preyPositions != null) {
+                for (int i = 0; i < Reaper.preyNumber; i++) {
                     // if (!myApplet.preyDead[i]) {
                     preyimage = myApplet.getEnemyImage(i);
-                    g.drawImage(preyimage, ReaperGame.preyPositions[i].x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
-                            ReaperGame.preyPositions[i].y, null);
+                    g.drawImage(preyimage, Reaper.preyPositions[i].x - (Reaper.page * Reaper.PAGEWIDTH),
+                            Reaper.preyPositions[i].y, null);
                     // }
                 }
             }
 
             // draw Hero (on top of preceding images)
-            if (ReaperGame.playerPosition != null) {
+            if (Reaper.playerPosition != null) {
                 // show the player
                 Image reapersimage = myApplet.getHeroImage();
-                if (ReaperGame.reapercrouching) {
-                    if (ReaperGame.reaperleft)
+                if (Reaper.reapercrouching) {
+                    if (Reaper.reaperleft)
                         reapersimage = reapercrouchleft;
                     else
                         reapersimage = reapercrouch;
                 }
-                if (ReaperGame.jumping) {
-                    if (ReaperGame.reaperleft)
+                if (Reaper.jumping) {
+                    if (Reaper.reaperleft)
                         reapersimage = reaperjumpleft;
                     else
                         reapersimage = reaperjump;
                 }
-                g.drawImage(reapersimage, ReaperGame.playerPosition.x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
-                        ReaperGame.playerPosition.y, /* Color.white, */ null);
+                g.drawImage(reapersimage, Reaper.playerPosition.x - (Reaper.page * Reaper.PAGEWIDTH),
+                        Reaper.playerPosition.y, /* Color.white, */ null);
             }
         }
 
         // draw warp image (on top of Hero)
-        if (ReaperGame.warpzone != null) {
+        if (Reaper.warpzone != null) {
             // show the warp zone at the end of the level
-            g.drawImage(reaperwarp, ReaperGame.warpzone.x - (ReaperGame.page * ReaperGame.PAGEWIDTH),
-                    ReaperGame.warpzone.y, Color.white, null);
+            g.drawImage(reaperwarp, Reaper.warpzone.x - (Reaper.page * Reaper.PAGEWIDTH),
+                    Reaper.warpzone.y, Color.white, null);
         }
 
-        if (ReaperGame.ingame == false && !ReaperGame.juststarted) {
-            if (ReaperGame.dead) {
+        if (Reaper.ingame == false && !Reaper.juststarted) {
+            if (Reaper.dead) {
                 // Reaper is dead (?!)
                 g.drawImage(reaperdead, myApplet.getBounds().width / 2, getBounds().height / 2, Color.white, null);
             } else {

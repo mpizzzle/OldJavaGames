@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-public class PongGame extends JFrame implements KeyListener, Runnable {
+public class Pong extends JFrame implements KeyListener, Runnable {
     private static final long serialVersionUID = 1018529427970832700L;
     // all member variables 'static' because shared with the ball action thread
     private static PongArea area;
@@ -35,27 +35,27 @@ public class PongGame extends JFrame implements KeyListener, Runnable {
     int timeSinceLastBall = 0;
 
     public static void main(String[] args) {
-        PongGame pongGame = new PongGame();
+        Pong Pong = new Pong();
 
-        pongGame.setLayout(null);
-        pongGame.setBackground(Color.black);
-        pongGame.setSize(RIGHTEDGE, BOTTOMEDGE);
-        PongGame.area = new PongArea(pongGame);
-        pongGame.add(area);
-        //RIGHTEDGE = pongGame.getBounds().width - 1;
-        //BOTTOMEDGE = pongGame.getBounds().height - 1;
-        pongGame.setVisible(true);
+        Pong.setLayout(null);
+        Pong.setBackground(Color.black);
+        Pong.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Pong.area = new PongArea(Pong);
+        Pong.add(area);
+        //RIGHTEDGE = Pong.getBounds().width - 1;
+        //BOTTOMEDGE = Pong.getBounds().height - 1;
+        Pong.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        pongGame.addKeyListener(pongGame);
-        area.addKeyListener(pongGame);
+        Pong.addKeyListener(Pong);
+        area.addKeyListener(Pong);
         area.requestFocus();
 
-        balls = new Thread(pongGame);
+        balls = new Thread(Pong);
         balls.start();
 
-        //EventQueue.invokeLater(pongGame);
+        //EventQueue.invokeLater(Pong);
     }
 
     public void doLevel(int level) {

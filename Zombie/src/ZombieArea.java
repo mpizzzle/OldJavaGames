@@ -11,13 +11,13 @@ import javax.swing.JPanel;
 
 public class ZombieArea extends JPanel implements ActionListener {
     private static final long serialVersionUID = 8492549939914174796L;
-    ZombieGame myApplet = null;
+    Zombie myApplet = null;
     Image zombieImage;
     Image personImage;
     Image pitImage;
     private Image explosion1, explosion2, explosion3;
     
-    public ZombieArea(ZombieGame parent) {
+    public ZombieArea(Zombie parent) {
         myApplet = parent;
 
         try {
@@ -43,20 +43,20 @@ public class ZombieArea extends JPanel implements ActionListener {
         g.fillRect(0, 0, w, h);
         g.setColor(Color.black);
 
-        if (ZombieGame.playerPosition != null) {
+        if (Zombie.playerPosition != null) {
             // show the player
             //g.drawString("#", myApplet.playerPosition.x, myApplet.playerPosition.y);
-            g.drawImage(personImage, ZombieGame.playerPosition.x, ZombieGame.playerPosition.y,Color.gray, null);
+            g.drawImage(personImage, Zombie.playerPosition.x, Zombie.playerPosition.y,Color.gray, null);
 
             // show the pits
-            for (int i=0; i < ZombieGame.pitPositions.length; i++) {
-                g.drawImage(pitImage, ZombieGame.pitPositions[i].x, ZombieGame.pitPositions[i].y,Color.gray, null);
+            for (int i=0; i < Zombie.pitPositions.length; i++) {
+                g.drawImage(pitImage, Zombie.pitPositions[i].x, Zombie.pitPositions[i].y,Color.gray, null);
             }
         
             // show the zombies
-            for (int i=0; i < ZombieGame.zombiePositions.length; i++) {
-                if (ZombieGame.zombiePositions[i].x > -1) 
-                    g.drawImage(zombieImage, ZombieGame.zombiePositions[i].x, ZombieGame.zombiePositions[i].y,null);
+            for (int i=0; i < Zombie.zombiePositions.length; i++) {
+                if (Zombie.zombiePositions[i].x > -1) 
+                    g.drawImage(zombieImage, Zombie.zombiePositions[i].x, Zombie.zombiePositions[i].y,null);
             }
 
             if (myApplet.explosionx != -1) {

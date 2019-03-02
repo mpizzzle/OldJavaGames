@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class TankArea extends JPanel {
     private static final long serialVersionUID = -2906196036928924340L;
 
-    TankGame myApplet = null;
+    Tank myApplet = null;
 
     Image badtankdown2;
     Image badtankdownshoot;
@@ -52,7 +52,7 @@ public class TankArea extends JPanel {
     private Image explosion1, explosion2, explosion3;
     MediaTracker mt = null;
 
-    public TankArea(TankGame parent) {
+    public TankArea(Tank parent) {
         myApplet = parent;
         enemyImage = load(myApplet, "bad-tank-up.gif");
         personImage = load(myApplet, "tank-up.gif");
@@ -94,7 +94,7 @@ public class TankArea extends JPanel {
         tankup = load(myApplet, "tank-up.gif");
     }
 
-    Image load(TankGame parent, String picture) {
+    Image load(Tank parent, String picture) {
         try {
             Image im = ImageIO.read(new File("../Assets/" + picture));
             checkImage(im, picture);
@@ -131,24 +131,24 @@ public class TankArea extends JPanel {
         g.fillRect(0, 0, w, h);
         g.setColor(Color.black);
 
-        if (TankGame.playerPosition != null) {
+        if (Tank.playerPosition != null) {
             // show the player
             // g.drawString("#", myApplet.playerPosition.x, myApplet.playerPosition.y);
-            int elem = myApplet.shooting ? myApplet.SHOOTING : myApplet.NOTSHOOTING;
-            g.drawImage(myApplet.goodImages[myApplet.goodImageNo][elem], TankGame.playerPosition.x,
-                    TankGame.playerPosition.y, Color.gray, null);
+            int elem = myApplet.shooting ? Tank.SHOOTING : Tank.NOTSHOOTING;
+            g.drawImage(myApplet.goodImages[myApplet.goodImageNo][elem], Tank.playerPosition.x,
+                    Tank.playerPosition.y, Color.gray, null);
 
             // show the pits
-            for (int i = 0; i < TankGame.pitPositions.length; i++) {
-                g.drawImage(pitImage, TankGame.pitPositions[i].x, TankGame.pitPositions[i].y, Color.gray, null);
+            for (int i = 0; i < Tank.pitPositions.length; i++) {
+                g.drawImage(pitImage, Tank.pitPositions[i].x, Tank.pitPositions[i].y, Color.gray, null);
             }
 
             // show the enemies
-            for (int i = 0; i < TankGame.enemyPositions.length; i++) {
-                if (TankGame.enemyPositions[i].x > -1) {
-                    int eelem = myApplet.enemyShooting[i] ? myApplet.SHOOTING : myApplet.NOTSHOOTING;
-                    g.drawImage(myApplet.badImages[myApplet.enemyImageNo[i]][eelem], TankGame.enemyPositions[i].x,
-                            TankGame.enemyPositions[i].y, null);
+            for (int i = 0; i < Tank.enemyPositions.length; i++) {
+                if (Tank.enemyPositions[i].x > -1) {
+                    int eelem = myApplet.enemyShooting[i] ? Tank.SHOOTING : Tank.NOTSHOOTING;
+                    g.drawImage(myApplet.badImages[myApplet.enemyImageNo[i]][eelem], Tank.enemyPositions[i].x,
+                            Tank.enemyPositions[i].y, null);
                 }
             }
             if (myApplet.explosionx != -1) {
