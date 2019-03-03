@@ -1,4 +1,7 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
 import java.io.File;
 import java.io.IOException;
 //import java.applet.AudioClip;
@@ -54,7 +57,7 @@ public class CaveArea extends JPanel {
 
     Image load(CaveGame parent, String picture) {
         try {
-            Image im = ImageIO.read(new File("../Assets/" + picture));
+            Image im = ImageIO.read(new File("/home/mpizzzle/OldJavaGames/CaveGame/Assets/" + picture));
             checkImage(im, picture);
             return (im);
         } catch (IOException e) {
@@ -106,5 +109,4 @@ public class CaveArea extends JPanel {
             }
         }
     }
-
 }
