@@ -55,6 +55,8 @@ public class Tank extends JFrame implements KeyListener, Runnable {
         tank.setLayout(null);
         tank.setBackground(Color.gray);
         tank.setSize(RIGHTEDGE, BOTTOMEDGE);
+        tank.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tank.setTitle("Tank");
 
         area = new TankArea(tank);
         tank.add(area);

@@ -40,6 +40,8 @@ public class Pong extends JFrame implements KeyListener, Runnable {
         pong.setLayout(null);
         pong.setBackground(Color.black);
         pong.setSize(RIGHTEDGE, BOTTOMEDGE);
+        pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pong.setTitle("Pong");
         Pong.area = new PongArea(pong);
         pong.add(area);
         //RIGHTEDGE = Pong.getBounds().width - 1;

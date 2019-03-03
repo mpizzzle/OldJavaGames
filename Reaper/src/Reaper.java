@@ -130,6 +130,8 @@ public class Reaper extends JFrame implements KeyListener, Runnable {
         reaper.setLayout(null);
         reaper.setBackground(Color.white);
         reaper.setSize(RIGHTEDGE, BOTTOMEDGE);
+        reaper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        reaper.setTitle("Reaper");
 
         area = new ReaperArea(reaper);
         reaper.add(area);

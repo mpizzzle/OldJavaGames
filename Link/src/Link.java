@@ -80,6 +80,8 @@ public class Link extends JFrame implements KeyListener, Runnable {
         link.setLayout(null);
         link.setBackground(Color.white);
         link.setSize(RIGHTEDGE, BOTTOMEDGE);
+        link.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        link.setTitle("Link");
 
         area = new LinkArea(link);
         link.add(area);

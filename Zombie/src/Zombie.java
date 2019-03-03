@@ -41,6 +41,8 @@ public class Zombie extends JFrame implements KeyListener, Runnable {
         zombie.setLayout(null);
         zombie.setBackground(Color.gray);
         zombie.setSize(RIGHTEDGE, BOTTOMEDGE);
+        zombie.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        zombie.setTitle("Zombie");
 
         area = new ZombieArea(zombie);
         zombie.add(area);

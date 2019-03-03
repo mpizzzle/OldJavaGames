@@ -167,6 +167,8 @@ public class Mario extends JFrame implements KeyListener, Runnable {
         mario.setLayout(null);
         mario.setBackground(Color.white);
         mario.setSize(RIGHTEDGE, BOTTOMEDGE);
+        mario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mario.setTitle("Mario");
         area = new MarioArea(mario);
         mario.add(area);
         //RIGHTEDGE = (Mario.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;

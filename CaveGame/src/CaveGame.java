@@ -22,6 +22,8 @@ public class CaveGame extends JFrame implements KeyListener, Runnable {
         caveGame.setLayout(null);
         caveGame.setBackground(Color.white);
         caveGame.setSize(WIDTH, HEIGHT);
+        caveGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        caveGame.setTitle("Cave Game");
 
         area = new CaveArea(caveGame);
         caveGame.add(area);
