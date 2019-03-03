@@ -327,7 +327,7 @@ public class Link extends JFrame implements KeyListener, Runnable {
                 // area.repaint();
                 // System.out.println("Hero's position = (" + playerPosition.x + ", " +
                 // playerPosition.y + ")");
-                System.out.println(" ");
+                // System.out.println(" ");
             } // if valid key press
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             doLevel(++level);
