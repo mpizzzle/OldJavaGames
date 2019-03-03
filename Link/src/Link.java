@@ -75,31 +75,31 @@ public class Link extends JFrame implements KeyListener, Runnable {
     static int startPosY = GROUNDLEVEL;
 
     public static void main(String[] args) {
-        Link Link = new Link();
+        Link link = new Link();
 
-        Link.setLayout(null);
-        Link.setBackground(Color.white);
-        Link.setSize(RIGHTEDGE, BOTTOMEDGE);
+        link.setLayout(null);
+        link.setBackground(Color.white);
+        link.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new LinkArea(Link);
-        Link.add(area);
+        area = new LinkArea(link);
+        link.add(area);
         XAMOUNT = 12;
         YAMOUNT = 12;
         //RIGHTEDGE = (Link.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
         //BOTTOMEDGE = Link.getBounds().height - 1;
-        Link.setVisible(true);
+        link.setVisible(true);
         //area.setBounds(0, 0, Link.getBounds().width, BOTTOMEDGE);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        Link.addKeyListener(Link);
-        area.addKeyListener(Link);
+        link.addKeyListener(link);
+        area.addKeyListener(link);
         area.requestFocus();
 
         levellengths[0] = RIGHTEDGE;
         obstacleImages[0] = area.obstacle;
 
-        timer = new Thread(Link);
+        timer = new Thread(link);
         timer.start();
     }
 
@@ -271,11 +271,6 @@ public class Link extends JFrame implements KeyListener, Runnable {
                 return (i);
         }
         return (-1);
-    }
-
-    public void finished() {
-        finished = true;
-        System.exit(0);
     }
 
     int randomMove() {

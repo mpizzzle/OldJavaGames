@@ -51,66 +51,66 @@ public class Tank extends JFrame implements KeyListener, Runnable {
     Image[][] badImages = new Image[8][2]; // up up2 down down2 left left2 right right2 x SHOOTING and NON_SHOOTING
 
     public static void main(String[] args) {
-        Tank Tank = new Tank();
-        Tank.setLayout(null);
-        Tank.setBackground(Color.gray);
-        Tank.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Tank tank = new Tank();
+        tank.setLayout(null);
+        tank.setBackground(Color.gray);
+        tank.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new TankArea(Tank);
-        Tank.add(area);
-        //RIGHTEDGE = Tank.getBounds().width - 1;
-        //BOTTOMEDGE = Tank.getBounds().height - 1;
+        area = new TankArea(tank);
+        tank.add(area);
+        //RIGHTEDGE = tank.getBounds().width - 1;
+        //BOTTOMEDGE = tank.getBounds().height - 1;
         XAMOUNT = 12;
         YAMOUNT = 12;
-        Tank.setVisible(true);
+        tank.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        Tank.addKeyListener(Tank);
-        area.addKeyListener(Tank);
+        tank.addKeyListener(tank);
+        area.addKeyListener(tank);
         area.requestFocus();
 
-        Tank.goodImages[FIRSTUP][NOTSHOOTING] = area.tankup;
-        Tank.goodImages[FIRSTUP + 1][NOTSHOOTING] = area.tankup2;
-        Tank.goodImages[FIRSTUP][SHOOTING] = area.tankupshoot;
-        Tank.goodImages[FIRSTUP + 1][SHOOTING] = area.tankupshoot2;
+        tank.goodImages[FIRSTUP][NOTSHOOTING] = area.tankup;
+        tank.goodImages[FIRSTUP + 1][NOTSHOOTING] = area.tankup2;
+        tank.goodImages[FIRSTUP][SHOOTING] = area.tankupshoot;
+        tank.goodImages[FIRSTUP + 1][SHOOTING] = area.tankupshoot2;
 
-        Tank.goodImages[FIRSTDOWN][NOTSHOOTING] = area.tankdown;
-        Tank.goodImages[FIRSTDOWN + 1][NOTSHOOTING] = area.tankdown2;
-        Tank.goodImages[FIRSTDOWN][SHOOTING] = area.tankdownshoot;
-        Tank.goodImages[FIRSTDOWN + 1][SHOOTING] = area.tankdownshoot2;
+        tank.goodImages[FIRSTDOWN][NOTSHOOTING] = area.tankdown;
+        tank.goodImages[FIRSTDOWN + 1][NOTSHOOTING] = area.tankdown2;
+        tank.goodImages[FIRSTDOWN][SHOOTING] = area.tankdownshoot;
+        tank.goodImages[FIRSTDOWN + 1][SHOOTING] = area.tankdownshoot2;
 
-        Tank.goodImages[FIRSTLEFT][NOTSHOOTING] = area.tankleft;
-        Tank.goodImages[FIRSTLEFT + 1][NOTSHOOTING] = area.tankleft2;
-        Tank.goodImages[FIRSTLEFT][SHOOTING] = area.tankleftshoot;
-        Tank.goodImages[FIRSTLEFT + 1][SHOOTING] = area.tankleftshoot2;
+        tank.goodImages[FIRSTLEFT][NOTSHOOTING] = area.tankleft;
+        tank.goodImages[FIRSTLEFT + 1][NOTSHOOTING] = area.tankleft2;
+        tank.goodImages[FIRSTLEFT][SHOOTING] = area.tankleftshoot;
+        tank.goodImages[FIRSTLEFT + 1][SHOOTING] = area.tankleftshoot2;
         
-        Tank.goodImages[FIRSTRIGHT][NOTSHOOTING] = area.tankright;
-        Tank.goodImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.tankright2;
-        Tank.goodImages[FIRSTRIGHT][SHOOTING] = area.tankrightshoot;
-        Tank.goodImages[FIRSTRIGHT + 1][SHOOTING] = area.tankrightshoot2;
+        tank.goodImages[FIRSTRIGHT][NOTSHOOTING] = area.tankright;
+        tank.goodImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.tankright2;
+        tank.goodImages[FIRSTRIGHT][SHOOTING] = area.tankrightshoot;
+        tank.goodImages[FIRSTRIGHT + 1][SHOOTING] = area.tankrightshoot2;
 
-        Tank.badImages[FIRSTUP][NOTSHOOTING] = area.badtankup;
-        Tank.badImages[FIRSTUP + 1][NOTSHOOTING] = area.badtankup2;
-        Tank.badImages[FIRSTUP][SHOOTING] = area.badtankupshoot;
-        Tank.badImages[FIRSTUP + 1][SHOOTING] = area.badtankupshoot2;
+        tank.badImages[FIRSTUP][NOTSHOOTING] = area.badtankup;
+        tank.badImages[FIRSTUP + 1][NOTSHOOTING] = area.badtankup2;
+        tank.badImages[FIRSTUP][SHOOTING] = area.badtankupshoot;
+        tank.badImages[FIRSTUP + 1][SHOOTING] = area.badtankupshoot2;
 
-        Tank.badImages[FIRSTDOWN][NOTSHOOTING] = area.badtankdown;
-        Tank.badImages[FIRSTDOWN + 1][NOTSHOOTING] = area.badtankdown2;
-        Tank.badImages[FIRSTDOWN][SHOOTING] = area.badtankdownshoot;
-        Tank.badImages[FIRSTDOWN + 1][SHOOTING] = area.badtankdownshoot2;
+        tank.badImages[FIRSTDOWN][NOTSHOOTING] = area.badtankdown;
+        tank.badImages[FIRSTDOWN + 1][NOTSHOOTING] = area.badtankdown2;
+        tank.badImages[FIRSTDOWN][SHOOTING] = area.badtankdownshoot;
+        tank.badImages[FIRSTDOWN + 1][SHOOTING] = area.badtankdownshoot2;
 
-        Tank.badImages[FIRSTLEFT][NOTSHOOTING] = area.badtankleft;
-        Tank.badImages[FIRSTLEFT + 1][NOTSHOOTING] = area.badtankleft2;
-        Tank.badImages[FIRSTLEFT][SHOOTING] = area.badtankleftshoot;
-        Tank.badImages[FIRSTLEFT + 1][SHOOTING] = area.badtankleftshoot2;
+        tank.badImages[FIRSTLEFT][NOTSHOOTING] = area.badtankleft;
+        tank.badImages[FIRSTLEFT + 1][NOTSHOOTING] = area.badtankleft2;
+        tank.badImages[FIRSTLEFT][SHOOTING] = area.badtankleftshoot;
+        tank.badImages[FIRSTLEFT + 1][SHOOTING] = area.badtankleftshoot2;
 
-        Tank.badImages[FIRSTRIGHT][NOTSHOOTING] = area.badtankright;
-        Tank.badImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.badtankright2;
-        Tank.badImages[FIRSTRIGHT][SHOOTING] = area.badtankrightshoot;
-        Tank.badImages[FIRSTRIGHT + 1][SHOOTING] = area.badtankrightshoot2;
+        tank.badImages[FIRSTRIGHT][NOTSHOOTING] = area.badtankright;
+        tank.badImages[FIRSTRIGHT + 1][NOTSHOOTING] = area.badtankright2;
+        tank.badImages[FIRSTRIGHT][SHOOTING] = area.badtankrightshoot;
+        tank.badImages[FIRSTRIGHT + 1][SHOOTING] = area.badtankrightshoot2;
 
-        enemies = new Thread(Tank);
+        enemies = new Thread(tank);
         enemies.start();
     }
 

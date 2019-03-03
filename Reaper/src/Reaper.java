@@ -125,25 +125,25 @@ public class Reaper extends JFrame implements KeyListener, Runnable {
 
     // *************************************************************
     public static void main(String[] args) {
-        Reaper Reaper = new Reaper();
+        Reaper reaper = new Reaper();
 
-        Reaper.setLayout(null);
-        Reaper.setBackground(Color.white);
-        Reaper.setSize(RIGHTEDGE, BOTTOMEDGE);
+        reaper.setLayout(null);
+        reaper.setBackground(Color.white);
+        reaper.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new ReaperArea(Reaper);
-        Reaper.add(area);
+        area = new ReaperArea(reaper);
+        reaper.add(area);
         //RIGHTEDGE = (Reaper.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
         //BOTTOMEDGE = Reaper.getBounds().height - 1;
-        Reaper.setVisible(true);
+        reaper.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         //GROUNDLEVEL = Reaper.getBounds().height - Reaper.GROUNDDIFF;
         startPosY = GROUNDLEVEL;
         //ReaperArea.FLOORLEVEL = Reaper.getBounds().height - ReaperArea.FLOORDIFF;
         area.setVisible(true);
 
-        Reaper.addKeyListener(Reaper);
-        area.addKeyListener(Reaper);
+        reaper.addKeyListener(reaper);
+        area.addKeyListener(reaper);
         area.requestFocus();
 
         for (int i = 0; i < OBSTACLEIMAGES; i++) {
@@ -163,7 +163,7 @@ public class Reaper extends JFrame implements KeyListener, Runnable {
         // floors[i] = area.floor4;
         // }
 
-        timer = new Thread(Reaper);
+        timer = new Thread(reaper);
         timer.start();
 
     }

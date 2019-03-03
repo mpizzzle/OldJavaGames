@@ -37,26 +37,26 @@ public class Zombie extends JFrame implements KeyListener, Runnable {
     protected int explosionx = -1, explosiony = -1;
 
     public static void main(String[] args) {
-        Zombie Zombie = new Zombie();
-        Zombie.setLayout(null);
-        Zombie.setBackground(Color.gray);
-	Zombie.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Zombie zombie = new Zombie();
+        zombie.setLayout(null);
+        zombie.setBackground(Color.gray);
+        zombie.setSize(RIGHTEDGE, BOTTOMEDGE);
 
-        area = new ZombieArea(Zombie);
-        Zombie.add(area);
+        area = new ZombieArea(zombie);
+        zombie.add(area);
         // RIGHTEDGE = getBounds().width - 1;
         // BOTTOMEDGE = getBounds().height - 1;
         XAMOUNT = 12;
         YAMOUNT = 12;
-        Zombie.setVisible(true);
+        zombie.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        Zombie.addKeyListener(Zombie);
-        area.addKeyListener(Zombie);
+        zombie.addKeyListener(zombie);
+        area.addKeyListener(zombie);
         area.requestFocus();
 
-        zombies = new Thread(Zombie);
+        zombies = new Thread(zombie);
         zombies.start();
     }
 

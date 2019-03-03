@@ -163,15 +163,15 @@ public class Mario extends JFrame implements KeyListener, Runnable {
 
     // *************************************************************
     public static void main(String[] args) {
-        Mario Mario = new Mario();
-        Mario.setLayout(null);
-        Mario.setBackground(Color.white);
-        Mario.setSize(RIGHTEDGE, BOTTOMEDGE);
-        area = new MarioArea(Mario);
-        Mario.add(area);
+        Mario mario = new Mario();
+        mario.setLayout(null);
+        mario.setBackground(Color.white);
+        mario.setSize(RIGHTEDGE, BOTTOMEDGE);
+        area = new MarioArea(mario);
+        mario.add(area);
         //RIGHTEDGE = (Mario.getBounds().width / XAMOUNT) * XAMOUNT + LEFTEDGE;
         //BOTTOMEDGE = Mario.getBounds().height - 1;
-        Mario.setVisible(true);
+        mario.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         //GROUNDLEVEL = Mario.getBounds().height - GROUNDDIFF;
         //GROUNDLEVEL = BOTTOMEDGE;// - GROUNDDIFF;
@@ -179,8 +179,8 @@ public class Mario extends JFrame implements KeyListener, Runnable {
         //MarioArea.FLOORLEVEL = Mario.getBounds().height - MarioArea.FLOORDIFF;
         area.setVisible(true);
 
-        Mario.addKeyListener(Mario);
-        area.addKeyListener(Mario);
+        mario.addKeyListener(mario);
+        area.addKeyListener(mario);
         area.requestFocus();
 
         obstacleImages[0] = area.obstacle;
@@ -342,7 +342,7 @@ public class Mario extends JFrame implements KeyListener, Runnable {
         floors[7] = area.floor6;
         floors[8] = area.Floor10;
 
-        timer = new Thread(Mario);
+        timer = new Thread(mario);
         timer.start();
 
     }

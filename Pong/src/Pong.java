@@ -35,27 +35,25 @@ public class Pong extends JFrame implements KeyListener, Runnable {
     int timeSinceLastBall = 0;
 
     public static void main(String[] args) {
-        Pong Pong = new Pong();
+        Pong pong = new Pong();
 
-        Pong.setLayout(null);
-        Pong.setBackground(Color.black);
-        Pong.setSize(RIGHTEDGE, BOTTOMEDGE);
-        Pong.area = new PongArea(Pong);
-        Pong.add(area);
+        pong.setLayout(null);
+        pong.setBackground(Color.black);
+        pong.setSize(RIGHTEDGE, BOTTOMEDGE);
+        Pong.area = new PongArea(pong);
+        pong.add(area);
         //RIGHTEDGE = Pong.getBounds().width - 1;
         //BOTTOMEDGE = Pong.getBounds().height - 1;
-        Pong.setVisible(true);
+        pong.setVisible(true);
         area.setBounds(0, 0, RIGHTEDGE, BOTTOMEDGE);
         area.setVisible(true);
 
-        Pong.addKeyListener(Pong);
-        area.addKeyListener(Pong);
+        pong.addKeyListener(pong);
+        area.addKeyListener(pong);
         area.requestFocus();
 
-        balls = new Thread(Pong);
+        balls = new Thread(pong);
         balls.start();
-
-        //EventQueue.invokeLater(Pong);
     }
 
     public void doLevel(int level) {
