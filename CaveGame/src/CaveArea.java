@@ -57,7 +57,7 @@ public class CaveArea extends JPanel {
 
     Image load(CaveGame parent, String picture) {
         try {
-            Image im = ImageIO.read(new File("/home/mpizzzle/OldJavaGames/CaveGame/Assets/" + picture));
+            Image im = ImageIO.read(new File("../Assets/" + picture));
             checkImage(im, picture);
             return (im);
         } catch (IOException e) {
